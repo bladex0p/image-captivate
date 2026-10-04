@@ -563,6 +563,7 @@ html body .pcaflaglist {
   overflow: hidden;
   vertical-align: bottom;
   padding-bottom: 0.04em;
+  margin-right: 0.06em;
 }
 .hero-word > span {
   display: inline-block;
