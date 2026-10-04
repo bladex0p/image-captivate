@@ -167,7 +167,7 @@ export function NumberedCards({
               style={staggerIndex(i)}
               className="card-dark group flex gap-6 bg-brand-black/40 p-6 transition-colors hover:border-brand-red md:p-8"
             >
-              <span className="num-outline font-heading text-4xl font-bold leading-none md:text-5xl">{String(i + 1).padStart(2, "0")}</span>
+              <span className="num-outline w-[2.2ch] shrink-0 font-heading text-4xl font-bold leading-none md:text-5xl">{String(i + 1).padStart(2, "0")}</span>
               <div>
                 <h3 className="text-2xl">{it.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-on-dark-muted">{it.body}</p>

@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Mail, MapPin, Phone, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -47,10 +48,12 @@ function Home() {
             <Tagline />
             <h1 className="mt-6 text-[clamp(2.75rem,1.4rem+4.6vw,6rem)] leading-[0.95]">
               {heroWords.map((w, i) => (
-                <span key={i} className="hero-word">
-                  <span style={staggerIndex(i)}>{w}</span>
+                <Fragment key={i}>
+                  <span className="hero-word">
+                    <span style={staggerIndex(i)}>{w}</span>
+                  </span>
                   {i < heroWords.length - 1 ? " " : ""}
-                </span>
+                </Fragment>
               ))}
             </h1>
             <p className="reveal mt-8 max-w-2xl text-lg leading-relaxed text-on-dark-muted">
