@@ -8,7 +8,7 @@ export function seo(opts: {
   title: string;
   description: string;
   path: string;
-  faqs?: FAQ[];
+  faqs?: FAQ[] | undefined;
   crumbs?: Crumb[];
   noindex?: boolean;
 }) {

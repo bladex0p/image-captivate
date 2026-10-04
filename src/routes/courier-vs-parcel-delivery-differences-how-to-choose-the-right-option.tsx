@@ -3,7 +3,7 @@ import { ArticlePage } from "@/components/site/pages";
 import { articles } from "@/data/articles";
 import { seo } from "@/lib/seo";
 
-const a = articles[0];
+const a = articles[0]!;
 
 export const Route = createFileRoute("/courier-vs-parcel-delivery-differences-how-to-choose-the-right-option")({
   head: () =>

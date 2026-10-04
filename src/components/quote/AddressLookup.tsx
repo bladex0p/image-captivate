@@ -78,10 +78,10 @@ export function AddressLookup({
         );
         ctrl.listen("populate", (a) => {
           const opts = { shouldValidate: true, shouldDirty: true };
-          setValue(`${prefix}.line1`, a.Line1 ?? "", opts);
-          setValue(`${prefix}.line2`, [a.Line2, a.Line3].filter(Boolean).join(", "), opts);
-          setValue(`${prefix}.town`, a.City ?? "", opts);
-          setValue(`${prefix}.postcode`, a.PostalCode ?? "", opts);
+          setValue(`${prefix}.line1`, a["Line1"] ?? "", opts);
+          setValue(`${prefix}.line2`, [a["Line2"], a["Line3"]].filter(Boolean).join(", "), opts);
+          setValue(`${prefix}.town`, a["City"] ?? "", opts);
+          setValue(`${prefix}.postcode`, a["PostalCode"] ?? "", opts);
           setPopulated(true);
           onChanged?.();
         });
@@ -147,7 +147,7 @@ export function AddressLookup({
       <div className={showFields ? "grid gap-3 sm:grid-cols-2" : "hidden"}>
         <div className="sm:col-span-2">
           <Label htmlFor={id("line1")}>Address line 1</Label>
-          <Input id={id("line1")} className={`mt-1.5 ${darkInput}`} autoComplete="address-line1" {...register(`${prefix}.line1`, { onChange: onChanged })} />
+          <Input id={id("line1")} className={`mt-1.5 ${darkInput}`} autoComplete="address-line1" {...register(`${prefix}.line1`, { onChange: () => onChanged?.() })} />
           {err?.line1 && <p className="mt-1 text-xs text-brand-red">{err.line1.message}</p>}
         </div>
         <div className="sm:col-span-2">
@@ -161,7 +161,7 @@ export function AddressLookup({
         </div>
         <div>
           <Label htmlFor={id("postcode")}>Postcode</Label>
-          <Input id={id("postcode")} className={`mt-1.5 ${darkInput} uppercase`} autoComplete="postal-code" {...register(`${prefix}.postcode`, { onChange: onChanged })} />
+          <Input id={id("postcode")} className={`mt-1.5 ${darkInput} uppercase`} autoComplete="postal-code" {...register(`${prefix}.postcode`, { onChange: () => onChanged?.() })} />
           {err?.postcode && <p className="mt-1 text-xs text-brand-red">{err.postcode.message}</p>}
         </div>
       </div>

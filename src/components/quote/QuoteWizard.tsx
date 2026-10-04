@@ -98,7 +98,7 @@ export function QuoteWizard({ compact = false }: { compact?: boolean }) {
   };
 
   const next = async () => {
-    if (!validate(stepSchemas[step])) return;
+    if (!validate(stepSchemas[step]!)) return;
     if (step === 1) {
       if (v.distanceSource === "manual") {
         if (!validate(manualDistanceSchema)) return;
@@ -133,7 +133,7 @@ export function QuoteWizard({ compact = false }: { compact?: boolean }) {
   };
 
   const submit = async () => {
-    if (!validate(stepSchemas[7])) return;
+    if (!validate(stepSchemas[7]!)) return;
     setBusy(true);
     setSubmitErr("");
     try {
