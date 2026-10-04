@@ -12,7 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { services } from "@/data/services";
-import { assets, assetSrc } from "@/data/assets";
+import { assetSrc } from "@/data/assets";
 import { site } from "@/data/site";
 
 const links = [
@@ -32,10 +32,9 @@ const navCls =
 /** White logo on dark surfaces. On light surfaces (light-theme header/drawer) it sits on a black
  * plate until logo-black.svg is supplied (see src/data/assets.ts). */
 export function Logo({ className = "h-14" }: { className?: string }) {
-  const black = assets.logoBlack.available;
   return (
     <span className="logo-plate inline-flex items-center transition-all duration-300">
-      <img src={assetSrc("logoWhite")} alt="LES Transport" className={`${className} w-auto ${black ? "dark-only" : ""}`} width={135} height={56} />
+      <img src={assetSrc("logoWhite")} alt="LES Transport" className={`${className} w-auto`} width={135} height={56} />
     </span>
   );
 }
@@ -68,14 +67,14 @@ export function Header() {
             </DropdownMenuTrigger>
             <DropdownMenuContent className="on-theme w-64 border-border-dark">
               {services.map((s) => (
-                <DropdownMenuItem key={s.slug} asChild className="focus:bg-grey-800 focus:text-brand-white">
+                <DropdownMenuItem key={s.slug} asChild className="focus:bg-brand-red focus:text-on-red">
                   <Link to="/service/$slug" params={{ slug: s.slug }}>
                     {s.title}
                   </Link>
                 </DropdownMenuItem>
               ))}
               <DropdownMenuSeparator className="bg-border-dark" />
-              <DropdownMenuItem asChild className="font-semibold text-brand-red focus:bg-grey-800 focus:text-brand-white">
+              <DropdownMenuItem asChild className="font-semibold text-brand-red focus:bg-brand-red focus:text-on-red">
                 <Link to="/services">View All Services</Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
