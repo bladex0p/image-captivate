@@ -51,19 +51,19 @@ function Fleet() {
             <article key={v.name} className="reveal">
               <ImageSlot asset={v.image} alt={`${v.name} in the LES Transport fleet`} />
               <h2 className="mt-5 text-3xl">{v.name}</h2>
-              <p className="mt-2 text-sm leading-relaxed text-grey-500">{v.description}</p>
+              <p className="mt-2 text-sm leading-relaxed text-fg-muted">{v.description}</p>
             </article>
           ))}
         </div>
       </section>
 
-      <section className="section bg-grey-100">
+      <section className="section bg-bg-alt">
         <div className="container-les">
-          <h2 className="text-4xl md:text-5xl">Vehicle Specifications</h2>
+          <h2 className="text-h2">Vehicle Specifications</h2>
           {/* Desktop table */}
-          <div className="mt-10 hidden overflow-hidden rounded-md border border-border-light bg-brand-white md:block">
-            <table className="w-full text-left text-sm">
-              <thead className="bg-brand-black text-brand-white">
+          <div className="mt-10 hidden overflow-hidden rounded-md border border-line bg-surface md:block">
+            <table className="w-full text-left text-sm tabular-nums">
+              <thead className="on-dark">
                 <tr>
                   <th scope="col" className="p-4 font-semibold uppercase tracking-[0.08em]">Vehicle</th>
                   {cols.map(([, l]) => <th key={l} scope="col" className="p-4 font-semibold uppercase tracking-[0.08em]">{l}</th>)}
@@ -71,9 +71,9 @@ function Fleet() {
               </thead>
               <tbody>
                 {fleet.map((v) => (
-                  <tr key={v.name} className="border-t border-border-light">
+                  <tr key={v.name} className="border-t border-line">
                     <th scope="row" className="p-4 font-semibold">{v.name}</th>
-                    {cols.map(([k]) => <td key={k} className="p-4 text-grey-500">{v.spec[k]}</td>)}
+                    {cols.map(([k]) => <td key={k} className="p-4 text-fg-muted">{v.spec[k]}</td>)}
                   </tr>
                 ))}
               </tbody>
@@ -86,13 +86,13 @@ function Fleet() {
                 <h3 className="text-2xl">{v.name}</h3>
                 <dl className="mt-3 grid gap-1.5 text-sm">
                   {cols.map(([k, l]) => (
-                    <div key={k} className="flex justify-between gap-4"><dt className="text-grey-500">{l}</dt><dd className="text-right font-medium">{v.spec[k]}</dd></div>
+                    <div key={k} className="flex justify-between gap-4"><dt className="text-fg-muted">{l}</dt><dd className="text-right font-medium">{v.spec[k]}</dd></div>
                   ))}
                 </dl>
               </div>
             ))}
           </div>
-          <p className="mt-6 max-w-3xl text-xs leading-relaxed text-grey-500">{specFootnote}</p>
+          <p className="mt-6 max-w-3xl text-xs leading-relaxed text-fg-muted">{specFootnote}</p>
         </div>
       </section>
 

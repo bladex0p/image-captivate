@@ -38,9 +38,9 @@ export function ContactForm({ withPhone = true, source = "contact" }: { withPhon
 
   if (status === "sent") {
     return (
-      <div role="status" className="rounded-md border border-border-light p-8">
+      <div role="status" className="rounded-md border border-line p-8">
         <h3 className="text-3xl">Message sent</h3>
-        <p className="mt-2 text-grey-500">Thanks for getting in touch. Our team will reply as soon as possible.</p>
+        <p className="mt-2 text-fg-muted">Thanks for getting in touch. Our team will reply as soon as possible.</p>
         <Button variant="outlineLight" className="mt-6" onClick={() => setStatus("idle")}>Send another</Button>
       </div>
     );

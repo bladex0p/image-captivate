@@ -24,7 +24,7 @@ function Services() {
         title="Courier Services"
         intro="LES Transport provides fast, reliable courier and delivery services across England, supporting businesses and individuals who require professional transport for parcels, freight and specialist deliveries."
       />
-      <section className="on-dark pb-16">
+      <section className="on-theme pb-16">
         <div className="container-les max-w-3xl">
           <QuoteWizard />
         </div>

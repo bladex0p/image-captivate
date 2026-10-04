@@ -9,12 +9,12 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-brand-red text-brand-white hover:bg-brand-red-hover",
-        brand: "bg-brand-red text-brand-white hover:bg-brand-red-hover",
+        default: "bg-brand-red text-on-red hover:bg-brand-red-hover",
+        brand: "bg-brand-red text-on-red hover:bg-brand-red-hover",
         outlineDark:
           "border border-brand-white text-brand-white bg-transparent hover:bg-brand-white hover:text-brand-black",
         outlineLight:
-          "border border-brand-black text-brand-black bg-transparent hover:bg-brand-black hover:text-brand-white",
+          "border border-fg text-fg bg-transparent hover:bg-fg hover:text-bg",
         outline: "border border-input bg-background hover:bg-accent",
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground normal-case tracking-normal",

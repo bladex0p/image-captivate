@@ -26,7 +26,7 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
     reportLovableError(error, { boundary: "tanstack_root_error_component" });
   }, [error]);
   return (
-    <section className="on-dark">
+    <section className="on-theme">
       <div className="container-les py-32 text-center">
         <h1 className="text-5xl">This page didn't load</h1>
         <p className="mt-4 text-on-dark-muted">Something went wrong on our end. Please try again or call us.</p>

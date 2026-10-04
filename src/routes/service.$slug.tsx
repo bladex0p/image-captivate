@@ -46,7 +46,7 @@ function ServiceDetail() {
         <div className="container-les grid items-start gap-12 lg:grid-cols-2">
           <div>
             <SectionHeading pill="Service" title={`What is ${s.title}?`} />
-            <div className="mt-6 leading-relaxed text-grey-500">
+            <div className="mt-6 leading-relaxed text-fg-muted">
               {d ? <p>{d.intro}</p> : <TodoBlock label={`Intro copy for ${s.title}.`} />}
             </div>
           </div>
@@ -54,7 +54,7 @@ function ServiceDetail() {
         </div>
       </section>
 
-      <section className="section bg-grey-100">
+      <section className="section bg-bg-alt">
         <div className="container-les grid gap-6 lg:grid-cols-3">
           {d ? (
             <>
@@ -75,7 +75,7 @@ function ServiceDetail() {
       <Coverage />
       <FleetPreview />
 
-      <section className="section bg-grey-100">
+      <section className="section bg-bg-alt">
         <div className="container-les">
           <SectionHeading pill="Related" title="Related Services" />
           <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

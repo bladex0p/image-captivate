@@ -32,12 +32,12 @@ function Home() {
   return (
     <>
       {/* Hero */}
-      <section className="on-dark">
+      <section className="on-theme">
         <ImageSlot asset="heroVan" alt="LES Transport van on the road, black and white photograph" ratio="aspect-[16/7] md:aspect-[16/6]" greyscale eager className="rounded-none" />
         <div className="container-les grid gap-12 py-14 lg:grid-cols-[1fr_minmax(0,30rem)] lg:gap-16 lg:py-20">
           <div>
             <Tagline />
-            <h1 className="mt-5 text-5xl md:text-6xl lg:text-7xl">Fast, Reliable Courier &amp; Delivery Services Across England</h1>
+            <h1 className="mt-5 text-display">Fast, Reliable Courier &amp; Delivery Services Across England</h1>
             <p className="mt-6 max-w-2xl text-lg leading-relaxed text-on-dark-muted">
               From urgent same-day deliveries to final mile delivery, LES Transport provides professional courier solutions for businesses and individuals across England. Operating from Bedfordshire with additional coverage from Birmingham, our experienced drivers and versatile fleet ensure your goods reach their destination safely and on time.
             </p>
@@ -78,13 +78,13 @@ function Home() {
             </Button>
           </div>
           <div className="grid grid-cols-2 gap-4">
-            <div className="rounded-md bg-brand-black p-8 text-brand-white">
-              <div className="font-heading text-5xl font-bold">{facts.vehicles}</div>
+            <div className="on-dark card-dark p-8">
+              <div className="font-heading text-5xl font-bold tabular-nums">{facts.vehicles}</div>
               <div className="mt-1 text-sm uppercase tracking-[0.12em] text-on-dark-muted">Vehicles</div>
             </div>
-            <div className="rounded-md border border-border-light p-8">
-              <div className="font-heading text-5xl font-bold">{facts.goodsInTransit}</div>
-              <div className="mt-1 text-sm uppercase tracking-[0.12em] text-grey-500">Goods-in-transit cover per vehicle</div>
+            <div className="rounded-md border border-line p-8">
+              <div className="font-heading text-5xl font-bold tabular-nums">{facts.goodsInTransit}</div>
+              <div className="mt-1 text-sm uppercase tracking-[0.12em] text-fg-muted">Goods-in-transit cover per vehicle</div>
             </div>
           </div>
         </div>

@@ -37,9 +37,9 @@ export function SectionHeading({
   return (
     <div className={cn("max-w-3xl", align === "center" && "mx-auto text-center", className)}>
       {pill && <PillLabel className="mb-5">{pill}</PillLabel>}
-      <As className="text-4xl md:text-5xl lg:text-6xl">{title}</As>
+      <As className="text-h1">{title}</As>
       {intro && (
-        <p className={cn("mt-5 text-base md:text-lg leading-relaxed", dark ? "text-on-dark-muted" : "text-grey-500")}>
+        <p className={cn("mt-5 max-w-[65ch] text-base md:text-lg leading-relaxed", dark ? "text-on-dark-muted" : "text-fg-muted")}>
           {intro}
         </p>
       )}
@@ -95,7 +95,7 @@ export function CheckList({ items, className, dark }: { items: string[]; classNa
       {items.map((i) => (
         <li key={i} className="flex items-start gap-3">
           <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-brand-red">
-            <Check className="size-3 text-brand-white" strokeWidth={3} aria-hidden />
+            <Check className="size-3 text-on-red" strokeWidth={3} aria-hidden />
           </span>
           <span className={cn("leading-snug", dark ? "text-brand-white" : "text-foreground")}>{i}</span>
         </li>
@@ -139,12 +139,12 @@ export function PageHero({
   children?: ReactNode;
 }) {
   return (
-    <section className="on-dark border-t border-border-dark">
+    <section className="on-theme border-t border-border-dark">
       <div className="container-les py-16 md:py-24">
         <Breadcrumbs items={crumbs} />
         <Tagline className="mt-8" />
-        <h1 className="mt-4 max-w-4xl text-5xl md:text-6xl lg:text-7xl">{title}</h1>
-        {intro && <p className="mt-6 max-w-3xl text-lg leading-relaxed text-on-dark-muted">{intro}</p>}
+        <h1 className="mt-4 max-w-4xl text-display">{title}</h1>
+        {intro && <p className="mt-6 max-w-[65ch] text-lg leading-relaxed text-on-dark-muted">{intro}</p>}
         {children}
       </div>
     </section>
@@ -153,7 +153,7 @@ export function PageHero({
 
 export function TodoBlock({ label }: { label: string }) {
   return (
-    <div className="rounded-md border border-dashed border-brand-red/60 bg-grey-100 p-6 text-sm text-grey-500">
+    <div className="rounded-md border border-dashed border-brand-red/60 bg-bg-alt p-6 text-sm text-fg-muted">
       <strong className="text-brand-red">TODO:</strong> {label}
     </div>
   );
