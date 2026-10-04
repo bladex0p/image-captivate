@@ -5,12 +5,12 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold uppercase tracking-[0.08em] transition-colors disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold uppercase tracking-[0.08em] transition-[color,background-color,border-color,transform] duration-200 active:translate-y-px disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
-        default: "bg-brand-red text-on-red hover:bg-brand-red-hover",
-        brand: "bg-brand-red text-on-red hover:bg-brand-red-hover",
+        default: "btn-sweep bg-brand-red text-on-red hover:bg-brand-red-hover",
+        brand: "btn-sweep bg-brand-red text-on-red hover:bg-brand-red-hover",
         outlineDark:
           "border border-brand-white text-brand-white bg-transparent hover:bg-brand-white hover:text-brand-black",
         outlineLight:

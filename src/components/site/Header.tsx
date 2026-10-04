@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { ChevronDown, Menu, Phone } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { ThemeToggle } from "./ThemeToggle";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
@@ -28,6 +28,8 @@ const links2 = [
 
 const navCls =
   "text-[13px] font-semibold uppercase tracking-[0.1em] text-on-dark-muted transition-colors hover:text-brand-white data-[status=active]:text-brand-white";
+const underline =
+  "relative py-2 after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:origin-left after:scale-x-0 after:bg-brand-red after:transition-transform after:duration-300 hover:after:scale-x-100 data-[status=active]:after:scale-x-100 data-[state=open]:after:scale-x-100";
 
 /** White logo on dark surfaces. On light surfaces (light-theme header/drawer) it sits on a black
  * plate until logo-black.svg is supplied (see src/data/assets.ts). */
@@ -42,8 +44,17 @@ export function Logo({ className = "h-14" }: { className?: string }) {
 export function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const bar = useRef<HTMLSpanElement>(null);
   useEffect(() => {
-    const on = () => setScrolled(window.scrollY > 24);
+    let raf = 0;
+    const on = () => {
+      setScrolled(window.scrollY > 24);
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        if (bar.current) bar.current.style.transform = `scaleX(${max > 0 ? Math.min(1, window.scrollY / max) : 0})`;
+      });
+    };
     on();
     window.addEventListener("scroll", on, { passive: true });
     return () => window.removeEventListener("scroll", on);
@@ -57,15 +68,15 @@ export function Header() {
 
         <nav aria-label="Main" className="hidden items-center gap-7 xl:flex">
           {links.map((l) => (
-            <Link key={l.to} to={l.to} className={navCls} activeOptions={{ exact: l.to === "/" }}>
+            <Link key={l.to} to={l.to} className={`${navCls} ${underline}`} activeOptions={{ exact: l.to === "/" }}>
               {l.label}
             </Link>
           ))}
           <DropdownMenu>
-            <DropdownMenuTrigger className={`${navCls} inline-flex items-center gap-1 outline-none`}>
-              Services <ChevronDown className="size-3.5" aria-hidden />
+            <DropdownMenuTrigger className={`${navCls} ${underline} group inline-flex items-center gap-1 outline-none`}>
+              Services <ChevronDown className="size-3.5 transition-transform duration-200 group-data-[state=open]:rotate-180" aria-hidden />
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="on-theme w-64 border-border-dark">
+            <DropdownMenuContent sideOffset={10} className="on-theme w-64 border-border-dark shadow-2xl data-[state=open]:duration-200">
               {services.map((s) => (
                 <DropdownMenuItem key={s.slug} asChild className="focus:bg-brand-red focus:text-on-red">
                   <Link to="/service/$slug" params={{ slug: s.slug }}>
@@ -80,7 +91,7 @@ export function Header() {
             </DropdownMenuContent>
           </DropdownMenu>
           {links2.map((l) => (
-            <Link key={l.to} to={l.to} className={navCls}>
+            <Link key={l.to} to={l.to} className={`${navCls} ${underline}`}>
               {l.label}
             </Link>
           ))}
@@ -104,8 +115,8 @@ export function Header() {
                 <ThemeToggle />
               </div>
               <nav aria-label="Mobile" className="flex flex-col px-6 pb-8" onClick={() => setOpen(false)}>
-                {[...links, ...links2].map((l) => (
-                  <Link key={l.to} to={l.to} className={`${navCls} border-b border-border-dark py-4 text-base`}>
+                {[...links, ...links2].map((l, i) => (
+                  <Link key={l.to} to={l.to} style={{ "--i": i } as CSSProperties} className={`${navCls} drawer-link border-b border-border-dark py-4 text-base`}>
                     {l.label}
                   </Link>
                 ))}
@@ -120,13 +131,14 @@ export function Header() {
                   <Link to="/get-a-quote">Get a Quote</Link>
                 </Button>
                 <Button asChild variant="outlineDark" className="mt-3">
-                  <a href={site.phoneHref}><Phone aria-hidden /> {site.phone}</a>
+                  <a href={site.phoneHref}><Phone aria-hidden /> Call {site.phone}</a>
                 </Button>
               </nav>
             </SheetContent>
           </Sheet>
         </div>
       </div>
+      <span ref={bar} aria-hidden className="scroll-progress absolute inset-x-0 -bottom-px h-0.5 bg-brand-red" />
     </header>
   );
 }
