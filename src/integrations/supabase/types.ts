@@ -14,7 +14,108 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      contact_submissions: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          ip_hash: string | null
+          message: string
+          name: string
+          phone: string | null
+          source: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          ip_hash?: string | null
+          message: string
+          name: string
+          phone?: string | null
+          source?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          ip_hash?: string | null
+          message?: string
+          name?: string
+          phone?: string | null
+          source?: string | null
+        }
+        Relationships: []
+      }
+      quote_requests: {
+        Row: {
+          attachments: Json
+          cargo_type: string
+          collection_address: Json
+          collection_date: string
+          collection_time: string
+          created_at: string
+          delivery_address: Json
+          delivery_type: string
+          distance_miles: number | null
+          distance_source: string | null
+          distance_zone: string | null
+          email: string
+          full_name: string
+          id: string
+          ip_hash: string | null
+          phone: string
+          special_requirements: string | null
+          terms_accepted: boolean
+          vehicle_category: string
+          vehicle_type: string
+        }
+        Insert: {
+          attachments?: Json
+          cargo_type: string
+          collection_address: Json
+          collection_date: string
+          collection_time: string
+          created_at?: string
+          delivery_address: Json
+          delivery_type: string
+          distance_miles?: number | null
+          distance_source?: string | null
+          distance_zone?: string | null
+          email: string
+          full_name: string
+          id?: string
+          ip_hash?: string | null
+          phone: string
+          special_requirements?: string | null
+          terms_accepted?: boolean
+          vehicle_category: string
+          vehicle_type: string
+        }
+        Update: {
+          attachments?: Json
+          cargo_type?: string
+          collection_address?: Json
+          collection_date?: string
+          collection_time?: string
+          created_at?: string
+          delivery_address?: Json
+          delivery_type?: string
+          distance_miles?: number | null
+          distance_source?: string | null
+          distance_zone?: string | null
+          email?: string
+          full_name?: string
+          id?: string
+          ip_hash?: string | null
+          phone?: string
+          special_requirements?: string | null
+          terms_accepted?: boolean
+          vehicle_category?: string
+          vehicle_type?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
