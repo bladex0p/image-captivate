@@ -1,0 +1,116 @@
+import { Link } from "@tanstack/react-router";
+import { ChevronDown, Menu, Phone } from "lucide-react";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { services } from "@/data/services";
+import { assetSrc } from "@/data/assets";
+import { site } from "@/data/site";
+
+const links = [
+  { to: "/", label: "Home" },
+  { to: "/about-us", label: "About Us" },
+  { to: "/how-it-works", label: "How It Works" },
+] as const;
+const links2 = [
+  { to: "/fleet", label: "Our Fleet" },
+  { to: "/insights", label: "Insights" },
+  { to: "/contact-us", label: "Contact Us" },
+] as const;
+
+const navCls =
+  "text-[13px] font-semibold uppercase tracking-[0.1em] text-on-dark-muted transition-colors hover:text-brand-white data-[status=active]:text-brand-white";
+
+export function Logo({ className = "h-10" }: { className?: string }) {
+  return <img src={assetSrc("logoWhite")} alt="LES Transport" className={`${className} w-auto`} width={97} height={40} />;
+}
+
+export function Header() {
+  const [open, setOpen] = useState(false);
+  return (
+    <header className="on-dark sticky top-0 z-50 border-b border-border-dark">
+      <div className="container-les flex h-20 items-center justify-between gap-6">
+        <Link to="/" aria-label="LES Transport home">
+          <Logo />
+        </Link>
+
+        <nav aria-label="Main" className="hidden items-center gap-7 xl:flex">
+          {links.map((l) => (
+            <Link key={l.to} to={l.to} className={navCls} activeOptions={{ exact: l.to === "/" }}>
+              {l.label}
+            </Link>
+          ))}
+          <DropdownMenu>
+            <DropdownMenuTrigger className={`${navCls} inline-flex items-center gap-1 outline-none`}>
+              Services <ChevronDown className="size-3.5" aria-hidden />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="on-dark w-64 border-border-dark">
+              {services.map((s) => (
+                <DropdownMenuItem key={s.slug} asChild className="focus:bg-grey-800 focus:text-brand-white">
+                  <Link to="/service/$slug" params={{ slug: s.slug }}>
+                    {s.title}
+                  </Link>
+                </DropdownMenuItem>
+              ))}
+              <DropdownMenuSeparator className="bg-border-dark" />
+              <DropdownMenuItem asChild className="font-semibold text-brand-red focus:bg-grey-800 focus:text-brand-white">
+                <Link to="/services">View All Services</Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          {links2.map((l) => (
+            <Link key={l.to} to={l.to} className={navCls}>
+              {l.label}
+            </Link>
+          ))}
+        </nav>
+
+        <div className="flex items-center gap-3">
+          <Button asChild className="hidden sm:inline-flex">
+            <Link to="/get-a-quote">Get a Quote</Link>
+          </Button>
+          <Sheet open={open} onOpenChange={setOpen}>
+            <SheetTrigger asChild>
+              <Button variant="outlineDark" size="icon" className="xl:hidden" aria-label="Open menu">
+                <Menu />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="on-dark w-[85vw] max-w-sm overflow-y-auto border-border-dark p-0">
+              <SheetTitle className="sr-only">Menu</SheetTitle>
+              <div className="p-6">
+                <Logo className="h-9" />
+              </div>
+              <nav aria-label="Mobile" className="flex flex-col px-6 pb-8" onClick={() => setOpen(false)}>
+                {[...links, ...links2].map((l) => (
+                  <Link key={l.to} to={l.to} className={`${navCls} border-b border-border-dark py-4 text-base`}>
+                    {l.label}
+                  </Link>
+                ))}
+                <p className="pt-6 text-xs uppercase tracking-[0.14em] text-on-dark-muted">Services</p>
+                {services.map((s) => (
+                  <Link key={s.slug} to="/service/$slug" params={{ slug: s.slug }} className="py-2 text-sm text-on-dark-muted hover:text-brand-white">
+                    {s.title}
+                  </Link>
+                ))}
+                <Link to="/services" className="py-2 text-sm font-semibold text-brand-red">View All Services</Link>
+                <Button asChild className="mt-8">
+                  <Link to="/get-a-quote">Get a Quote</Link>
+                </Button>
+                <Button asChild variant="outlineDark" className="mt-3">
+                  <a href={site.phoneHref}><Phone aria-hidden /> {site.phone}</a>
+                </Button>
+              </nav>
+            </SheetContent>
+          </Sheet>
+        </div>
+      </div>
+    </header>
+  );
+}
