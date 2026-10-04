@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link, type LinkProps } from "@tanstack/react-router";
 import { Check } from "lucide-react";
 import type { ReactNode } from "react";
 import { assets, assetSrc, type AssetKey } from "@/data/assets";
@@ -104,7 +104,7 @@ export function CheckList({ items, className, dark }: { items: string[]; classNa
   );
 }
 
-export function Breadcrumbs({ items }: { items: { name: string; to?: string }[] }) {
+export function Breadcrumbs({ items }: { items: { name: string; to?: LinkProps["to"] }[] }) {
   return (
     <nav aria-label="Breadcrumb" className="text-xs uppercase tracking-[0.14em] text-on-dark-muted">
       <ol className="flex flex-wrap items-center gap-2">
@@ -133,7 +133,7 @@ export function PageHero({
   intro,
   children,
 }: {
-  crumbs: { name: string; to?: string }[];
+  crumbs: { name: string; to?: LinkProps["to"] }[];
   title: ReactNode;
   intro?: ReactNode;
   children?: ReactNode;
