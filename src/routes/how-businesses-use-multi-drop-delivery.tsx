@@ -3,7 +3,7 @@ import { ArticlePage } from "@/components/site/pages";
 import { articles } from "@/data/articles";
 import { seo } from "@/lib/seo";
 
-const a = articles[1];
+const a = articles[1]!;
 
 export const Route = createFileRoute("/how-businesses-use-multi-drop-delivery")({
   head: () =>
