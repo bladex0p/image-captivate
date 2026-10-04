@@ -12,8 +12,20 @@
 
 @theme inline {
   --font-heading: "Barlow Condensed", "Arial Narrow", sans-serif;
-  --font-body: "Inter", system-ui, sans-serif;
-  --font-sans: "Inter", system-ui, sans-serif;
+  --font-body: "Manrope", "Inter", system-ui, sans-serif;
+  --font-sans: "Manrope", "Inter", system-ui, sans-serif;
+
+  --color-bg: var(--bg);
+  --color-bg-alt: var(--bg-alt);
+  --color-surface: var(--surface);
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-line: var(--line);
+  --color-header-bg: var(--header-bg);
+  --color-header-fg: var(--header-fg);
+  --color-footer-bg: var(--footer-bg);
+  --color-footer-fg: var(--footer-fg);
+  --color-on-red: var(--on-red);
 
   --radius-sm: calc(var(--radius) - 2px);
   --radius-md: var(--radius);
@@ -80,25 +92,46 @@
   --border-dark: oklch(1 0 0 / 25%);
   --border-light: oklch(0.922 0 0); /* #E5E5E5 */
   --on-dark-muted: oklch(1 0 0 / 72%);
+  --on-red: oklch(1 0 0);
+  --plate: oklch(0.145 0 0);
 
-  --background: var(--brand-white);
-  --foreground: var(--brand-black);
-  --card: var(--brand-white);
-  --card-foreground: var(--brand-black);
-  --popover: var(--brand-white);
-  --popover-foreground: var(--brand-black);
+  /* AddressNow dropdown (always dark, both themes) */
+  --addr-bg: oklch(0.19 0 0); /* ~#141414 */
+  --addr-text: oklch(1 0 0);
+  --addr-muted: oklch(0.75 0 0);
+  --addr-hover: var(--brand-red);
+
+  /* Semantic theme tokens — LIGHT */
+  --bg: oklch(1 0 0);
+  --bg-alt: var(--grey-100);
+  --surface: oklch(1 0 0);
+  --fg: oklch(0.145 0 0);
+  --fg-muted: var(--grey-500);
+  --line: var(--border-light);
+  --header-bg: oklch(1 0 0);
+  --header-fg: oklch(0.145 0 0);
+  --header-border: oklch(0.145 0 0);
+  --footer-bg: oklch(0.145 0 0);
+  --footer-fg: oklch(1 0 0);
+
+  --background: var(--bg);
+  --foreground: var(--fg);
+  --card: var(--surface);
+  --card-foreground: var(--fg);
+  --popover: var(--surface);
+  --popover-foreground: var(--fg);
   --primary: var(--brand-red);
   --primary-foreground: var(--brand-white);
-  --secondary: var(--grey-100);
-  --secondary-foreground: var(--brand-black);
-  --muted: var(--grey-100);
-  --muted-foreground: var(--grey-500);
-  --accent: var(--grey-100);
-  --accent-foreground: var(--brand-black);
+  --secondary: var(--bg-alt);
+  --secondary-foreground: var(--fg);
+  --muted: var(--bg-alt);
+  --muted-foreground: var(--fg-muted);
+  --accent: var(--bg-alt);
+  --accent-foreground: var(--fg);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: var(--brand-white);
-  --border: var(--border-light);
-  --input: var(--border-light);
+  --border: var(--line);
+  --input: var(--line);
   --ring: var(--brand-red);
   --chart-1: var(--brand-red);
   --chart-2: var(--brand-black);
@@ -115,6 +148,20 @@
   --sidebar-ring: var(--brand-white);
 }
 
+/* Semantic theme tokens — DARK (default) */
+.dark {
+  color-scheme: dark;
+  --bg: oklch(0.145 0 0);
+  --bg-alt: oklch(0.19 0 0);
+  --surface: oklch(0.215 0 0);
+  --fg: oklch(1 0 0);
+  --fg-muted: oklch(0.78 0 0);
+  --line: oklch(1 0 0 / 14%);
+  --header-bg: oklch(0.145 0 0);
+  --header-fg: oklch(1 0 0);
+  --header-border: oklch(1 0 0 / 25%);
+}
+
 @layer base {
   * {
     border-color: var(--color-border);
@@ -126,6 +173,8 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-body);
+    font-size: clamp(1rem, 0.95rem + 0.2vw, 1.125rem);
+    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
   }
   h1,
@@ -134,23 +183,60 @@
   h4 {
     font-family: var(--font-heading);
     text-transform: uppercase;
-    letter-spacing: -0.005em;
-    line-height: 1.02;
+    letter-spacing: 0.015em;
+    line-height: 1;
     font-weight: 700;
+    text-wrap: balance;
   }
   :focus-visible {
     outline: 2px solid var(--brand-red);
     outline-offset: 2px;
   }
-  .on-dark :focus-visible {
-    outline-color: var(--brand-white);
+  .dark :focus-visible {
+    outline-color: oklch(1 0 0);
+  }
+  html:not(.dark) .on-theme :focus-visible {
+    outline-color: var(--brand-red);
+  }
+  html:is(.dark, :not(.dark)) .on-dark :focus-visible {
+    outline-color: oklch(1 0 0);
   }
 }
 
 @layer components {
-  .on-dark {
+  /* Always-black signature surface (both themes) */
+  .on-dark,
+  .on-theme {
     background-color: var(--brand-black);
     color: var(--brand-white);
+  }
+  .on-dark {
+    color-scheme: dark;
+    --brand-white: oklch(1 0 0);
+    --brand-black: oklch(0.145 0 0);
+    --on-dark-muted: oklch(1 0 0 / 72%);
+    --border-dark: oklch(1 0 0 / 25%);
+  }
+  /* Theme-aware inverse surface: black in dark theme, light in light theme */
+  html:not(.dark) .on-theme {
+    --brand-white: oklch(0.145 0 0);
+    --brand-black: var(--bg-alt);
+    --on-dark-muted: oklch(0.42 0 0);
+    --border-dark: oklch(0 0 0 / 16%);
+  }
+  .site-header {
+    border-bottom: 1px solid var(--header-border);
+    background-color: var(--header-bg);
+    color: var(--header-fg);
+  }
+  .site-header.is-scrolled {
+    background-color: color-mix(in oklab, var(--header-bg) 82%, transparent);
+    backdrop-filter: blur(12px) saturate(140%);
+  }
+  html:not(.dark) .on-theme .logo-plate {
+    background: var(--plate);
+    border-radius: 8px;
+    padding: 4px 10px;
   }
   .container-les {
     width: 100%;
@@ -187,9 +273,9 @@
     border-radius: var(--radius);
   }
   .card-light {
-    border: 1px solid var(--border-light);
+    border: 1px solid var(--line);
     border-radius: var(--radius);
-    background: var(--brand-white);
+    background: var(--surface);
   }
   .input-dark {
     background: oklch(1 0 0 / 4%);
@@ -202,6 +288,7 @@
   .prose-les p {
     margin-bottom: 1rem;
     line-height: 1.7;
+    max-width: 65ch;
   }
   .prose-les h2 {
     font-size: 1.75rem;
@@ -231,34 +318,185 @@
   }
 }
 
-/* Royal Mail AddressNow dropdown, restyled for the dark quote card */
-.pcaautocomplete,
-.pca .pcaautocomplete {
-  background: var(--brand-black) !important;
-  border: 1px solid var(--border-dark) !important;
-  color: var(--brand-white) !important;
+@utility text-display {
+  font-size: clamp(2.6rem, 1.5rem + 4vw, 5.25rem);
+}
+@utility text-h1 {
+  font-size: clamp(2.25rem, 1.5rem + 2.6vw, 4rem);
+}
+@utility text-h2 {
+  font-size: clamp(1.9rem, 1.4rem + 1.6vw, 3rem);
+}
+
+/* ---------- Theme toggle (van) ---------- */
+.theme-toggle {
+  --tt-track: oklch(0.9 0.04 230);
+  --tt-ground: oklch(0.8 0.02 230);
+  --tt-body: oklch(1 0 0);
+  --tt-line: oklch(0.2 0 0);
+  --tt-window: oklch(0.3 0 0);
+  --tt-light: transparent;
+  position: relative;
+  width: 64px;
+  height: 32px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--tt-track);
+  border: 1px solid oklch(0 0 0 / 18%);
+  transition: background-color 500ms ease-in-out;
+  flex-shrink: 0;
+}
+.dark .theme-toggle {
+  --tt-track: oklch(0.22 0.03 265);
+  --tt-ground: oklch(0.35 0.02 265);
+  --tt-body: oklch(0.28 0 0);
+  --tt-line: oklch(1 0 0);
+  --tt-window: oklch(0.15 0 0);
+  --tt-light: oklch(0.9 0.15 85);
+  border-color: oklch(1 0 0 / 30%);
+}
+.theme-toggle .tt-ground {
+  position: absolute;
+  inset: auto 6px 6px 6px;
+  height: 1px;
+  background: var(--tt-ground);
+  transition: background-color 500ms ease-in-out;
+}
+.theme-toggle .tt-stars {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 500ms ease-in-out;
+}
+.dark .theme-toggle .tt-stars {
+  opacity: 1;
+}
+.theme-toggle .tt-van {
+  position: absolute;
+  left: 4px;
+  bottom: 4px;
+  width: 30px;
+  height: 18px;
+  transform: translateX(0);
+  transition: transform 500ms ease-in-out;
+}
+.dark .theme-toggle .tt-van {
+  transform: translateX(26px);
+}
+.theme-toggle .tt-van svg {
+  transform: scaleX(-1);
+}
+.dark .theme-toggle .tt-van svg {
+  transform: none;
+}
+.theme-toggle .tt-wheel {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.theme-toggle.is-driving .tt-wheel {
+  animation: tt-spin 250ms linear 2;
+}
+.theme-toggle .tt-headlight {
+  fill: var(--tt-light);
+  filter: drop-shadow(0 0 2px var(--tt-light));
+}
+@keyframes tt-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .theme-toggle,
+  .theme-toggle * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* ---------- Royal Mail AddressNow 2.30 dropdown ----------
+ * Rendered by the script into <body> as div.pca > div.pcaautocomplete.
+ * Always dark (readable in both themes). */
+html body div.pca,
+html body .pca {
+  z-index: 10000 !important;
   font-family: var(--font-body) !important;
-  border-radius: var(--radius) !important;
 }
-.pca .pcaitem,
-.pcaautocomplete .pcaitem {
-  color: var(--brand-white) !important;
-  background: transparent !important;
+html body div.pca div.pcaautocomplete,
+html body .pcaautocomplete {
+  background: var(--addr-bg) !important;
+  color: var(--addr-text) !important;
+  border: 1px solid var(--border-dark) !important;
+  border-radius: 6px !important;
+  box-shadow: 0 12px 32px -8px oklch(0 0 0 / 55%) !important;
+  overflow: hidden !important;
+  z-index: 10000 !important;
+}
+html body .pca .pcalist,
+html body .pcaautocomplete .pcalist {
+  background: var(--addr-bg) !important;
+  max-height: 280px !important;
+  overflow-y: auto !important;
+  scrollbar-width: thin;
+  scrollbar-color: oklch(1 0 0 / 30%) transparent;
+}
+html body .pca .pcalist::-webkit-scrollbar {
+  width: 8px;
+}
+html body .pca .pcalist::-webkit-scrollbar-thumb {
+  background: oklch(1 0 0 / 25%);
+  border-radius: 8px;
+}
+html body .pca .pcaitem,
+html body .pcaautocomplete .pcaitem {
+  background: var(--addr-bg) !important;
+  color: var(--addr-text) !important;
+  padding: 10px 14px !important;
+  border: 0 !important;
   border-bottom: 1px solid oklch(1 0 0 / 8%) !important;
+  font-size: 14px !important;
+  line-height: 1.4 !important;
+  cursor: pointer;
 }
-.pca .pcaitem:hover,
-.pca .pcaselected,
-.pcaautocomplete .pcaitem:hover,
-.pcaautocomplete .pcaselected {
-  background: var(--brand-red) !important;
-  color: var(--brand-white) !important;
+html body .pca .pcaitem *,
+html body .pcaautocomplete .pcaitem * {
+  color: inherit !important;
 }
-.pca .pcadescription,
-.pcaautocomplete .pcadescription {
-  color: var(--on-dark-muted) !important;
+html body .pca .pcaitem .pcadescription,
+html body .pca .pcadescription {
+  color: var(--addr-muted) !important;
+  margin-left: 6px;
 }
-.pca .pcafooter,
-.pca .pcafooter * {
-  background: var(--brand-black) !important;
-  color: var(--on-dark-muted) !important;
+html body .pca .pcaitem:hover,
+html body .pca .pcaitem.pcahover,
+html body .pca .pcaitem.pcaselected,
+html body .pca .pcaselected,
+html body .pcaautocomplete .pcaitem:hover,
+html body .pcaautocomplete .pcaselected {
+  background: var(--addr-hover) !important;
+  color: var(--on-red) !important;
+}
+html body .pca .pcaitem:hover .pcadescription,
+html body .pca .pcaselected .pcadescription,
+html body .pca .pcahover .pcadescription {
+  color: var(--on-red) !important;
+}
+html body .pca .pcatext,
+html body .pca .pcamessage,
+html body .pca .pcaheader,
+html body .pca .pcafooter,
+html body .pca .pcafooter * {
+  background: var(--addr-bg) !important;
+  color: var(--addr-muted) !important;
+  border-color: oklch(1 0 0 / 10%) !important;
+}
+/* UK only: hide every country selector element */
+html body .pca .pcaflag,
+html body .pca .pcaflaglist,
+html body .pca .pcacountrylist,
+html body .pca .pcacountry,
+html body .pca .pcafooter .pcaflagbutton,
+html body .pca .pcaflagbutton,
+html body .pcacountrylist,
+html body .pcaflaglist {
+  display: none !important;
 }
