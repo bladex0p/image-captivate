@@ -35,13 +35,29 @@ jobs:
         #   VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
         #   VITE_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.VITE_SUPABASE_PUBLISHABLE_KEY }}
 
-      # Single-page-app fallback so refreshing /fleet, /about-us etc. loads the app
-      - name: SPA fallback
-        run: cp dist/index.html dist/404.html
+      - name: Find build output and add SPA fallback
+        run: |
+          OUT=""
+          for d in dist dist/client build out .output/public; do
+            if [ -f "$d/index.html" ]; then OUT="$d"; break; fi
+          done
+
+          if [ -z "$OUT" ]; then
+            echo "::error::No index.html found in any known output folder."
+            echo "--- Project root ---"; ls -la
+            echo "--- dist (if it exists) ---"; ls -R dist 2>/dev/null | head -80 || true
+            echo "--- package.json scripts ---"; grep -A12 '"scripts"' package.json || true
+            exit 1
+          fi
+
+          echo "Using build output: $OUT"
+          cp "$OUT/index.html" "$OUT/404.html"
+          touch "$OUT/.nojekyll"
+          echo "OUT_DIR=$OUT" >> "$GITHUB_ENV"
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: ${{ env.OUT_DIR }}
 
   deploy:
     needs: build
