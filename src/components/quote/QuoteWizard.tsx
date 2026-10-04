@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { useForm, type Path } from "react-hook-form";
 import { Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { CheckCircle2, Paperclip, Upload, X } from "lucide-react";
+import { Check, Paperclip, Upload, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -42,7 +42,7 @@ function OptionCards({
             aria-checked={on}
             onClick={() => onChange(o.id)}
             className={cn(
-              "flex items-center justify-between gap-4 rounded-md border p-4 text-left transition-colors",
+              "flex items-center justify-between gap-4 rounded-md border p-4 text-left transition-[border-color,background-color,transform] duration-200 hover:-translate-y-px",
               on ? "border-brand-red bg-brand-red/10" : "border-border-dark hover:border-brand-white",
             )}
           >
@@ -50,7 +50,15 @@ function OptionCards({
               <span className="block font-semibold">{o.title}</span>
               <span className="mt-0.5 block text-sm text-on-dark-muted">{o.desc}</span>
             </span>
-            <span className={cn("size-4 shrink-0 rounded-full border-2", on ? "border-brand-red bg-brand-red" : "border-border-dark")} aria-hidden />
+            <span
+              className={cn(
+                "flex size-6 shrink-0 items-center justify-center rounded-full border-2 transition-colors",
+                on ? "border-brand-red bg-brand-red" : "border-border-dark",
+              )}
+              aria-hidden
+            >
+              {on && <Check className="tick-in size-3.5 text-on-red" strokeWidth={3} />}
+            </span>
           </button>
         );
       })}
@@ -74,6 +82,8 @@ export function QuoteWizard({ compact = false }: { compact?: boolean }) {
   const [distanceNote, setDistanceNote] = useState(false);
   const [busy, setBusy] = useState(false);
   const [drag, setDrag] = useState(false);
+  const [dir, setDir] = useState<1 | -1>(1);
+  const [shake, setShake] = useState(0);
   const topRef = useRef<HTMLDivElement>(null);
   const distanceFn = useServerFn(getDistance);
   const submitFn = useServerFn(submitQuote);
@@ -88,11 +98,13 @@ export function QuoteWizard({ compact = false }: { compact?: boolean }) {
     clearErrors();
     const r = schema.safeParse(getValues());
     if (r.success) return true;
+    setShake((n) => n + 1);
     for (const i of r.error.issues) setError(i.path.join(".") as Path<QuoteValues>, { message: i.message });
     return false;
   };
 
   const go = (n: number) => {
+    setDir(n >= step ? 1 : -1);
     setStep(n);
     requestAnimationFrame(() => topRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" }));
   };
@@ -200,15 +212,29 @@ export function QuoteWizard({ compact = false }: { compact?: boolean }) {
             <span>Step {step} of 7</span>
             <span>{STEPS[step - 1]}</span>
           </div>
-          <div className="mt-3 grid grid-cols-7 gap-1" aria-hidden>
+          <div className="mt-3 h-1 overflow-hidden rounded-full bg-brand-white/15" aria-hidden>
+            <div
+              className="h-full origin-left rounded-full bg-brand-red transition-transform duration-500 ease-out"
+              style={{ transform: `scaleX(${step / 7})` }}
+            />
+          </div>
+          <div className="mt-3 flex justify-between" aria-hidden>
             {STEPS.map((s, i) => (
-              <span key={s} className={cn("h-1 rounded-full", i < step ? "bg-brand-red" : "bg-brand-white/15")} />
+              <span
+                key={s}
+                className={cn(
+                  "size-2 rounded-full transition-[background-color,transform] duration-300",
+                  i + 1 === step ? "scale-125 bg-brand-red" : i + 1 < step ? "bg-brand-white" : "bg-brand-white/20",
+                )}
+              />
             ))}
           </div>
         </div>
       )}
 
-      <form onSubmit={(e) => e.preventDefault()} noValidate>
+      <form onSubmit={(e) => e.preventDefault()} noValidate className="overflow-hidden">
+        <div key={shake} className={shake ? "shake" : undefined}>
+        <div key={step} className={dir > 0 ? "step-fwd" : "step-back"}>
         <input type="text" tabIndex={-1} autoComplete="off" aria-hidden className="hidden" {...register("website")} />
 
         {step === 1 && (
@@ -381,14 +407,17 @@ export function QuoteWizard({ compact = false }: { compact?: boolean }) {
 
         {step === 8 && (
           <div className="grid gap-6" role="status">
-            <div className="flex items-start gap-3">
-              <CheckCircle2 className="size-7 shrink-0 text-brand-red" aria-hidden />
+            <div className="flex items-start gap-4">
+              <svg viewBox="0 0 56 56" className="success-tick size-12 shrink-0 text-brand-red" aria-hidden>
+                <circle cx="28" cy="28" r="25" fill="none" stroke="currentColor" strokeWidth="3" />
+                <path d="M17 29 l7 7 l15 -16" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
               <div>
                 <h3 className="text-3xl">Quote request submitted</h3>
                 <p className="mt-1 text-on-dark-muted">Our team will be in touch shortly.</p>
               </div>
             </div>
-            <div className="rounded-md border border-border-dark p-5">
+            <div className="fade-late rounded-md border border-border-dark p-5">
               <h4 className="text-xl">Your Quote</h4>
               <dl className="mt-4 grid gap-2 text-sm">
                 <div className="flex justify-between gap-4"><dt className="text-on-dark-muted">Route</dt><dd className="text-right">{v.collection.postcode.toUpperCase()} → {v.delivery.postcode.toUpperCase()}</dd></div>
@@ -412,6 +441,8 @@ export function QuoteWizard({ compact = false }: { compact?: boolean }) {
           </div>
         )}
 
+        </div>
+        </div>
         {step <= 7 && (
           <div className="mt-8 flex items-center justify-between gap-3">
             {step > 1 ? (
