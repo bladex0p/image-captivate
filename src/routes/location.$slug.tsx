@@ -2,7 +2,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PageHero, SectionHeading } from "@/components/site/primitives";
-import { CTABand, FAQAccordion, FleetPreview, NumberedCards, ServicesGrid } from "@/components/site/sections";
+import { CTABand, FactsBand, FAQAccordion, FleetPreview, NumberedCards, ServicesGrid } from "@/components/site/sections";
 import { NotFoundPage } from "@/components/site/pages";
 import { getLocation } from "@/data/locations";
 import { mapEmbed } from "@/data/site";

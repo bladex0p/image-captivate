@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { CheckList, ImageSlot, PageHero, SectionHeading } from "@/components/site/primitives";
-import { BulletPanel, CTABand, FAQAccordion, FleetPreview, ServicesGrid } from "@/components/site/sections";
+import { BulletPanel, CTABand, FactsBand, FAQAccordion, FleetPreview, ServicesGrid } from "@/components/site/sections";
+import { CoverageMarquee } from "@/components/site/motion";
 import { aboutFaqs } from "@/data/faqs";
 import { seo } from "@/lib/seo";
 
@@ -25,7 +26,7 @@ function About() {
       <section className="section">
         <div className="container-les grid items-start gap-12 lg:grid-cols-2">
           <div>
-            <SectionHeading pill="About Us" title="Reliable Courier Services" />
+            <SectionHeading className="reveal" pill="About Us" title="Reliable Courier Services" />
             <div className="mt-6 space-y-4 leading-relaxed text-fg-muted">
               <p>LES Transport is a professional courier and delivery company providing fast, secure and reliable transport services across England. Based in Bedfordshire with additional operational coverage in Birmingham, Hertfordshire and Buckinghamshire we support businesses and individuals who require dependable logistics solutions, from urgent same-day deliveries to final mile delivery.</p>
               <p>Our focus is simple: deliver every job safely, efficiently and on time. We understand that when customers trust us with their deliveries, they are trusting us with something important to their business or personal needs. That is why we prioritise reliability, communication and professional service on every job we undertake.</p>
@@ -34,6 +35,7 @@ function About() {
           <ImageSlot asset="whyUsDriver" alt="LES Transport driver with a delivery" ratio="aspect-[4/3]" />
         </div>
       </section>
+      <FactsBand />
       <section className="section on-theme">
         <div className="container-les grid gap-12 lg:grid-cols-2">
           <SectionHeading
@@ -66,6 +68,7 @@ function About() {
           />
         </div>
       </section>
+      <CoverageMarquee />
       <FAQAccordion faqs={aboutFaqs} />
       <CTABand title="Work With LES Transport" secondary={{ label: "View Services", to: "/services" }} />
       <div className="hidden"><Button asChild><Link to="/services">Services</Link></Button></div>

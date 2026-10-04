@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHero, SectionHeading } from "@/components/site/primitives";
-import { Coverage, CTABand, FAQAccordion, FleetPreview, NumberedCards, StepTimeline } from "@/components/site/sections";
+import { Coverage, CTABand, FactsBand, FAQAccordion, FleetPreview, NumberedCards, StepTimeline } from "@/components/site/sections";
+import { CoverageMarquee, RouteDivider } from "@/components/site/motion";
 import { howFaqs } from "@/data/faqs";
 import { seo } from "@/lib/seo";
 
@@ -30,10 +31,11 @@ function HowItWorks() {
       <PageHero crumbs={[{ name: "How It Works" }]} title="How It Works" intro="Four simple steps from quote to delivery." />
       <section className="section">
         <div className="container-les">
-          <SectionHeading pill="Process" title="From Quote to Delivery" />
+          <SectionHeading className="reveal" pill="Process" title="From Quote to Delivery" />
           <div className="mt-14"><StepTimeline steps={steps} /></div>
         </div>
       </section>
+      <FactsBand />
       <NumberedCards
         title="Why Choose LES Transport"
         items={[
@@ -45,7 +47,9 @@ function HowItWorks() {
         ]}
       />
       <FleetPreview title="Vehicles for Every Delivery" />
+      <RouteDivider />
       <Coverage />
+      <CoverageMarquee />
       <FAQAccordion faqs={howFaqs} />
       <CTABand title="Need a Courier Today?" secondary={{ label: "View Services", to: "/services" }} />
     </>

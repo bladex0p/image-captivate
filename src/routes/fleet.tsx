@@ -1,5 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ImageSlot, PageHero } from "@/components/site/primitives";
+import { PageHero } from "@/components/site/primitives";
+import { FleetCarousel } from "@/components/site/FleetCarousel";
+import { RouteDivider } from "@/components/site/motion";
+import { facts } from "@/data/site";
 import { CTABand, FAQAccordion, StatStrip } from "@/components/site/sections";
 import { fleet, specFootnote } from "@/data/fleet";
 import { fleetFaqs } from "@/data/faqs";
@@ -37,31 +40,26 @@ function Fleet() {
         <div className="mt-12">
           <StatStrip
             items={[
-              { value: "100+", label: "Vehicles in the active fleet" },
-              { value: "5", label: "Vehicle classes (Small Van to LWB)" },
-              { value: "£10,000", label: "Goods-in-transit insurance per vehicle" },
+              { value: facts.vehicles, label: "Vehicles in the active fleet" },
+              { value: String(fleet.length), label: "Vehicle classes (Small Van to LWB)" },
+              { value: facts.goodsInTransit, label: "Goods-in-transit insurance per vehicle" },
             ]}
           />
         </div>
       </PageHero>
 
       <section className="section">
-        <div className="container-les grid gap-10 md:grid-cols-2 lg:grid-cols-3">
-          {fleet.map((v) => (
-            <article key={v.name} className="reveal">
-              <ImageSlot asset={v.image} alt={`${v.name} in the LES Transport fleet`} />
-              <h2 className="mt-5 text-3xl">{v.name}</h2>
-              <p className="mt-2 text-sm leading-relaxed text-fg-muted">{v.description}</p>
-            </article>
-          ))}
+        <div className="container-les">
+          <FleetCarousel items={fleet} headingLevel="h2" cols="lg:grid-cols-3" />
         </div>
       </section>
+      <RouteDivider />
 
       <section className="section bg-bg-alt">
         <div className="container-les">
-          <h2 className="text-h2">Vehicle Specifications</h2>
+          <h2 className="reveal text-h2">Vehicle Specifications</h2>
           {/* Desktop table */}
-          <div className="mt-10 hidden overflow-hidden rounded-md border border-line bg-surface md:block">
+          <div className="reveal mt-10 hidden overflow-hidden rounded-md border border-line bg-surface md:block">
             <table className="w-full text-left text-sm tabular-nums">
               <thead className="on-dark">
                 <tr>
@@ -71,8 +69,8 @@ function Fleet() {
               </thead>
               <tbody>
                 {fleet.map((v) => (
-                  <tr key={v.name} className="border-t border-line">
-                    <th scope="row" className="p-4 font-semibold">{v.name}</th>
+                  <tr key={v.name} className="border-t border-line transition-colors hover:bg-bg-alt [&:hover>th]:text-brand-red">
+                    <th scope="row" className="p-4 font-semibold transition-colors">{v.name}</th>
                     {cols.map(([k]) => <td key={k} className="p-4 text-fg-muted">{v.spec[k]}</td>)}
                   </tr>
                 ))}
