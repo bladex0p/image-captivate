@@ -10,33 +10,249 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as R404RouteImport } from './routes/404'
+import { Route as AboutUsRouteImport } from './routes/about-us'
+import { Route as ContactUsRouteImport } from './routes/contact-us'
+import { Route as CookiePolicyRouteImport } from './routes/cookie-policy'
+import { Route as CourierVsParcelDeliveryDifferencesHowToChooseTheRightOptionRouteImport } from './routes/courier-vs-parcel-delivery-differences-how-to-choose-the-right-option'
+import { Route as FleetRouteImport } from './routes/fleet'
+import { Route as GetAQuoteRouteImport } from './routes/get-a-quote'
+import { Route as HowBusinessesUseMultiDropDeliveryRouteImport } from './routes/how-businesses-use-multi-drop-delivery'
+import { Route as HowItWorksRouteImport } from './routes/how-it-works'
+import { Route as InsightsRouteImport } from './routes/insights'
+import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
+import { Route as ServicesRouteImport } from './routes/services'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as TermsRouteImport } from './routes/terms'
+import { Route as LocationSlugRouteImport } from './routes/location.$slug'
+import { Route as ServiceSlugRouteImport } from './routes/service.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const R404Route = R404RouteImport.update({
+  id: '/404',
+  path: '/404',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutUsRoute = AboutUsRouteImport.update({
+  id: '/about-us',
+  path: '/about-us',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactUsRoute = ContactUsRouteImport.update({
+  id: '/contact-us',
+  path: '/contact-us',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CookiePolicyRoute = CookiePolicyRouteImport.update({
+  id: '/cookie-policy',
+  path: '/cookie-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CourierVsParcelDeliveryDifferencesHowToChooseTheRightOptionRoute =
+  CourierVsParcelDeliveryDifferencesHowToChooseTheRightOptionRouteImport.update(
+    {
+      id: '/courier-vs-parcel-delivery-differences-how-to-choose-the-right-option',
+      path: '/courier-vs-parcel-delivery-differences-how-to-choose-the-right-option',
+      getParentRoute: () => rootRouteImport,
+    } as any,
+  )
+const FleetRoute = FleetRouteImport.update({
+  id: '/fleet',
+  path: '/fleet',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GetAQuoteRoute = GetAQuoteRouteImport.update({
+  id: '/get-a-quote',
+  path: '/get-a-quote',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HowBusinessesUseMultiDropDeliveryRoute =
+  HowBusinessesUseMultiDropDeliveryRouteImport.update({
+    id: '/how-businesses-use-multi-drop-delivery',
+    path: '/how-businesses-use-multi-drop-delivery',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const HowItWorksRoute = HowItWorksRouteImport.update({
+  id: '/how-it-works',
+  path: '/how-it-works',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InsightsRoute = InsightsRouteImport.update({
+  id: '/insights',
+  path: '/insights',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyPolicyRoute = PrivacyPolicyRouteImport.update({
+  id: '/privacy-policy',
+  path: '/privacy-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesRoute = ServicesRouteImport.update({
+  id: '/services',
+  path: '/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LocationSlugRoute = LocationSlugRouteImport.update({
+  id: '/location/$slug',
+  path: '/location/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServiceSlugRoute = ServiceSlugRouteImport.update({
+  id: '/service/$slug',
+  path: '/service/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/404': typeof R404Route
+  '/about-us': typeof AboutUsRoute
+  '/contact-us': typeof ContactUsRoute
+  '/cookie-policy': typeof CookiePolicyRoute
+  '/courier-vs-parcel-delivery-differences-how-to-choose-the-right-option': typeof CourierVsParcelDeliveryDifferencesHowToChooseTheRightOptionRoute
+  '/fleet': typeof FleetRoute
+  '/get-a-quote': typeof GetAQuoteRoute
+  '/how-businesses-use-multi-drop-delivery': typeof HowBusinessesUseMultiDropDeliveryRoute
+  '/how-it-works': typeof HowItWorksRoute
+  '/insights': typeof InsightsRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
+  '/services': typeof ServicesRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/terms': typeof TermsRoute
+  '/location/$slug': typeof LocationSlugRoute
+  '/service/$slug': typeof ServiceSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/404': typeof R404Route
+  '/about-us': typeof AboutUsRoute
+  '/contact-us': typeof ContactUsRoute
+  '/cookie-policy': typeof CookiePolicyRoute
+  '/courier-vs-parcel-delivery-differences-how-to-choose-the-right-option': typeof CourierVsParcelDeliveryDifferencesHowToChooseTheRightOptionRoute
+  '/fleet': typeof FleetRoute
+  '/get-a-quote': typeof GetAQuoteRoute
+  '/how-businesses-use-multi-drop-delivery': typeof HowBusinessesUseMultiDropDeliveryRoute
+  '/how-it-works': typeof HowItWorksRoute
+  '/insights': typeof InsightsRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
+  '/services': typeof ServicesRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/terms': typeof TermsRoute
+  '/location/$slug': typeof LocationSlugRoute
+  '/service/$slug': typeof ServiceSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/404': typeof R404Route
+  '/about-us': typeof AboutUsRoute
+  '/contact-us': typeof ContactUsRoute
+  '/cookie-policy': typeof CookiePolicyRoute
+  '/courier-vs-parcel-delivery-differences-how-to-choose-the-right-option': typeof CourierVsParcelDeliveryDifferencesHowToChooseTheRightOptionRoute
+  '/fleet': typeof FleetRoute
+  '/get-a-quote': typeof GetAQuoteRoute
+  '/how-businesses-use-multi-drop-delivery': typeof HowBusinessesUseMultiDropDeliveryRoute
+  '/how-it-works': typeof HowItWorksRoute
+  '/insights': typeof InsightsRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
+  '/services': typeof ServicesRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/terms': typeof TermsRoute
+  '/location/$slug': typeof LocationSlugRoute
+  '/service/$slug': typeof ServiceSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/404'
+    | '/about-us'
+    | '/contact-us'
+    | '/cookie-policy'
+    | '/courier-vs-parcel-delivery-differences-how-to-choose-the-right-option'
+    | '/fleet'
+    | '/get-a-quote'
+    | '/how-businesses-use-multi-drop-delivery'
+    | '/how-it-works'
+    | '/insights'
+    | '/privacy-policy'
+    | '/services'
+    | '/sitemap.xml'
+    | '/terms'
+    | '/location/$slug'
+    | '/service/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/404'
+    | '/about-us'
+    | '/contact-us'
+    | '/cookie-policy'
+    | '/courier-vs-parcel-delivery-differences-how-to-choose-the-right-option'
+    | '/fleet'
+    | '/get-a-quote'
+    | '/how-businesses-use-multi-drop-delivery'
+    | '/how-it-works'
+    | '/insights'
+    | '/privacy-policy'
+    | '/services'
+    | '/sitemap.xml'
+    | '/terms'
+    | '/location/$slug'
+    | '/service/$slug'
+  id:
+    | '__root__'
+    | '/'
+    | '/404'
+    | '/about-us'
+    | '/contact-us'
+    | '/cookie-policy'
+    | '/courier-vs-parcel-delivery-differences-how-to-choose-the-right-option'
+    | '/fleet'
+    | '/get-a-quote'
+    | '/how-businesses-use-multi-drop-delivery'
+    | '/how-it-works'
+    | '/insights'
+    | '/privacy-policy'
+    | '/services'
+    | '/sitemap.xml'
+    | '/terms'
+    | '/location/$slug'
+    | '/service/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  R404Route: typeof R404Route
+  AboutUsRoute: typeof AboutUsRoute
+  ContactUsRoute: typeof ContactUsRoute
+  CookiePolicyRoute: typeof CookiePolicyRoute
+  CourierVsParcelDeliveryDifferencesHowToChooseTheRightOptionRoute: typeof CourierVsParcelDeliveryDifferencesHowToChooseTheRightOptionRoute
+  FleetRoute: typeof FleetRoute
+  GetAQuoteRoute: typeof GetAQuoteRoute
+  HowBusinessesUseMultiDropDeliveryRoute: typeof HowBusinessesUseMultiDropDeliveryRoute
+  HowItWorksRoute: typeof HowItWorksRoute
+  InsightsRoute: typeof InsightsRoute
+  PrivacyPolicyRoute: typeof PrivacyPolicyRoute
+  ServicesRoute: typeof ServicesRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  TermsRoute: typeof TermsRoute
+  LocationSlugRoute: typeof LocationSlugRoute
+  ServiceSlugRoute: typeof ServiceSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +264,141 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/404': {
+      id: '/404'
+      path: '/404'
+      fullPath: '/404'
+      preLoaderRoute: typeof R404RouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about-us': {
+      id: '/about-us'
+      path: '/about-us'
+      fullPath: '/about-us'
+      preLoaderRoute: typeof AboutUsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact-us': {
+      id: '/contact-us'
+      path: '/contact-us'
+      fullPath: '/contact-us'
+      preLoaderRoute: typeof ContactUsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cookie-policy': {
+      id: '/cookie-policy'
+      path: '/cookie-policy'
+      fullPath: '/cookie-policy'
+      preLoaderRoute: typeof CookiePolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/courier-vs-parcel-delivery-differences-how-to-choose-the-right-option': {
+      id: '/courier-vs-parcel-delivery-differences-how-to-choose-the-right-option'
+      path: '/courier-vs-parcel-delivery-differences-how-to-choose-the-right-option'
+      fullPath: '/courier-vs-parcel-delivery-differences-how-to-choose-the-right-option'
+      preLoaderRoute: typeof CourierVsParcelDeliveryDifferencesHowToChooseTheRightOptionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/fleet': {
+      id: '/fleet'
+      path: '/fleet'
+      fullPath: '/fleet'
+      preLoaderRoute: typeof FleetRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/get-a-quote': {
+      id: '/get-a-quote'
+      path: '/get-a-quote'
+      fullPath: '/get-a-quote'
+      preLoaderRoute: typeof GetAQuoteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/how-businesses-use-multi-drop-delivery': {
+      id: '/how-businesses-use-multi-drop-delivery'
+      path: '/how-businesses-use-multi-drop-delivery'
+      fullPath: '/how-businesses-use-multi-drop-delivery'
+      preLoaderRoute: typeof HowBusinessesUseMultiDropDeliveryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/how-it-works': {
+      id: '/how-it-works'
+      path: '/how-it-works'
+      fullPath: '/how-it-works'
+      preLoaderRoute: typeof HowItWorksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/insights': {
+      id: '/insights'
+      path: '/insights'
+      fullPath: '/insights'
+      preLoaderRoute: typeof InsightsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy-policy': {
+      id: '/privacy-policy'
+      path: '/privacy-policy'
+      fullPath: '/privacy-policy'
+      preLoaderRoute: typeof PrivacyPolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services': {
+      id: '/services'
+      path: '/services'
+      fullPath: '/services'
+      preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/location/$slug': {
+      id: '/location/$slug'
+      path: '/location/$slug'
+      fullPath: '/location/$slug'
+      preLoaderRoute: typeof LocationSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/service/$slug': {
+      id: '/service/$slug'
+      path: '/service/$slug'
+      fullPath: '/service/$slug'
+      preLoaderRoute: typeof ServiceSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  R404Route: R404Route,
+  AboutUsRoute: AboutUsRoute,
+  ContactUsRoute: ContactUsRoute,
+  CookiePolicyRoute: CookiePolicyRoute,
+  CourierVsParcelDeliveryDifferencesHowToChooseTheRightOptionRoute:
+    CourierVsParcelDeliveryDifferencesHowToChooseTheRightOptionRoute,
+  FleetRoute: FleetRoute,
+  GetAQuoteRoute: GetAQuoteRoute,
+  HowBusinessesUseMultiDropDeliveryRoute:
+    HowBusinessesUseMultiDropDeliveryRoute,
+  HowItWorksRoute: HowItWorksRoute,
+  InsightsRoute: InsightsRoute,
+  PrivacyPolicyRoute: PrivacyPolicyRoute,
+  ServicesRoute: ServicesRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
+  TermsRoute: TermsRoute,
+  LocationSlugRoute: LocationSlugRoute,
+  ServiceSlugRoute: ServiceSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
