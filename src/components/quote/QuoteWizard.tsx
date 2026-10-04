@@ -83,7 +83,14 @@ export function QuoteWizard({ compact = false }: { compact?: boolean }) {
   const [busy, setBusy] = useState(false);
   const [drag, setDrag] = useState(false);
   const [dir, setDir] = useState<1 | -1>(1);
-  const [shake, setShake] = useState(0);
+  const shakeRef = useRef<HTMLDivElement>(null);
+  const shake = () => {
+    const el = shakeRef.current;
+    if (!el) return;
+    el.classList.remove("shake");
+    void el.offsetWidth;
+    el.classList.add("shake");
+  };
   const topRef = useRef<HTMLDivElement>(null);
   const distanceFn = useServerFn(getDistance);
   const submitFn = useServerFn(submitQuote);
@@ -98,7 +105,7 @@ export function QuoteWizard({ compact = false }: { compact?: boolean }) {
     clearErrors();
     const r = schema.safeParse(getValues());
     if (r.success) return true;
-    setShake((n) => n + 1);
+    shake();
     for (const i of r.error.issues) setError(i.path.join(".") as Path<QuoteValues>, { message: i.message });
     return false;
   };
@@ -233,7 +240,7 @@ export function QuoteWizard({ compact = false }: { compact?: boolean }) {
       )}
 
       <form onSubmit={(e) => e.preventDefault()} noValidate className="overflow-hidden">
-        <div key={shake} className={shake ? "shake" : undefined}>
+        <div ref={shakeRef}>
         <div key={step} className={dir > 0 ? "step-fwd" : "step-back"}>
         <input type="text" tabIndex={-1} autoComplete="off" aria-hidden className="hidden" {...register("website")} />
 
