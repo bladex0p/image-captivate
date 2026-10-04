@@ -49,7 +49,7 @@ function LocationPage() {
             <SectionHeading pill="Same Day" title={l.sameDay.title} intro={l.sameDay.body} />
             <div className="mt-10 grid gap-3 sm:grid-cols-2">
               {l.coverage.map((c) => (
-                <div key={c.title} className="card-light p-5">
+                <div key={c.title} className="card-light reveal p-5 transition-colors hover:border-brand-red">
                   <h3 className="flex items-center gap-2 text-xl"><MapPin className="size-4 text-brand-red" aria-hidden />{c.title}</h3>
                   <p className="mt-1 text-sm text-fg-muted">{c.body}</p>
                 </div>
@@ -66,6 +66,7 @@ function LocationPage() {
         </div>
       </section>
 
+      <FactsBand />
       <FleetPreview />
       <ServicesGrid />
       <NumberedCards title={`Why ${l.town} Businesses Choose LES Transport`} items={l.why} />
