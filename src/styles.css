@@ -79,7 +79,7 @@
 }
 
 :root {
-  --radius: 0.3125rem; /* 5px */
+  --radius: 0.375rem; /* 6px */
 
   /* Brand (from brief) */
   --brand-black: oklch(0.145 0 0); /* #0A0A0A */
@@ -252,9 +252,14 @@
   .section {
     padding-block: 4.5rem;
   }
+  @media (min-width: 768px) {
+    .section {
+      padding-block: 6rem;
+    }
+  }
   @media (min-width: 1024px) {
     .section {
-      padding-block: 6.5rem;
+      padding-block: 7rem;
     }
   }
   .pill {
@@ -295,16 +300,6 @@
     margin: 2rem 0 0.75rem;
   }
 
-  /* Subtle fade-in on scroll (CSS-only; no-op where unsupported) */
-  @supports (animation-timeline: view()) {
-    @media (prefers-reduced-motion: no-preference) {
-      .reveal {
-        animation: les-fade-up linear both;
-        animation-timeline: view();
-        animation-range: entry 0% entry 35%;
-      }
-    }
-  }
 }
 
 @keyframes les-fade-up {
