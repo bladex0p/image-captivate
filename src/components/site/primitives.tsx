@@ -1,6 +1,7 @@
 import { Link, type LinkProps } from "@tanstack/react-router";
 import { Check } from "lucide-react";
-import type { ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import { staggerIndex } from "./motion";
 import { assets, assetSrc, type AssetKey } from "@/data/assets";
 import { cn } from "@/lib/utils";
 
@@ -11,7 +12,7 @@ export function PillLabel({ children, className }: { children: ReactNode; classN
 export function Tagline({ className }: { className?: string }) {
   return (
     <p className={cn("flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.16em] text-brand-red", className)}>
-      <span aria-hidden className="h-0.5 w-8 bg-brand-red" />
+      <span aria-hidden className="tagline-dash h-0.5 w-8 bg-brand-red" />
       No Stress. Just LES.
     </p>
   );
@@ -76,25 +77,36 @@ export function ImageSlot({
       </div>
     );
   }
+  return <LoadedImage src={assetSrc(asset)} alt={alt} ratio={ratio} className={className} greyscale={greyscale} eager={eager} />;
+}
+
+function LoadedImage({ src, alt, ratio, className, greyscale, eager }: { src: string; alt: string; ratio: string; className?: string | undefined; greyscale?: boolean | undefined; eager?: boolean | undefined }) {
+  const ref = useRef<HTMLImageElement>(null);
+  const [loaded, setLoaded] = useState(true);
+  useEffect(() => {
+    if (ref.current && !ref.current.complete) setLoaded(false);
+  }, []);
   return (
-    <div className={cn("overflow-hidden rounded-md bg-grey-800", ratio, className)}>
+    <div className={cn("overflow-hidden rounded-md bg-grey-800", !loaded && "img-skeleton", ratio, className)}>
       <img
-        src={assetSrc(asset)}
+        ref={ref}
+        src={src}
         alt={alt}
         loading={eager ? "eager" : "lazy"}
         decoding="async"
-        className={cn("h-full w-full object-cover", greyscale && "grayscale")}
+        onLoad={() => setLoaded(true)}
+        className={cn("h-full w-full object-cover transition-[opacity,transform] duration-500", !loaded && "opacity-0", greyscale && "grayscale")}
       />
     </div>
   );
 }
 
-export function CheckList({ items, className, dark }: { items: string[]; className?: string; dark?: boolean }) {
+export function CheckList({ items, className, dark, animated }: { items: string[]; className?: string; dark?: boolean; animated?: boolean }) {
   return (
     <ul className={cn("space-y-3", className)}>
-      {items.map((i) => (
+      {items.map((i, n) => (
         <li key={i} className="flex items-start gap-3">
-          <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-brand-red">
+          <span style={animated ? staggerIndex(n) : undefined} className={cn(animated && "tick-pop", "mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-brand-red")}>
             <Check className="size-3 text-on-red" strokeWidth={3} aria-hidden />
           </span>
           <span className={cn("leading-snug", dark ? "text-brand-white" : "text-foreground")}>{i}</span>

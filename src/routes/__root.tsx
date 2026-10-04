@@ -19,6 +19,8 @@ import { Button } from "@/components/ui/button";
 import { ADDRESSNOW_CSS, ADDRESSNOW_JS } from "@/config/addressnow";
 import { localBusinessJsonLd } from "@/lib/seo";
 import { themeInitScript } from "@/components/site/ThemeToggle";
+import { MotionRuntime, motionInitScript } from "@/components/site/motion";
+import { useLocation } from "@tanstack/react-router";
 
 function ErrorComponent({ error, reset }: ErrorComponentProps) {
   console.error(error);
@@ -60,6 +62,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
     scripts: [
       { children: themeInitScript },
+      { children: motionInitScript },
       { src: ADDRESSNOW_JS, async: true },
       { type: "application/ld+json", children: localBusinessJsonLd },
     ],
@@ -86,6 +89,7 @@ function RootShell({ children }: { children: ReactNode }) {
         <Header />
         <main id="main">{children}</main>
         <Footer />
+        <MotionRuntime />
         <MobileCallButton />
         <CookieBanner />
         <Scripts />
@@ -98,7 +102,17 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   return (
     <QueryClientProvider client={queryClient}>
-      <Outlet />
+      <PageFade />
     </QueryClientProvider>
+  );
+}
+
+/** Quick 200ms fade between routes. */
+function PageFade() {
+  const pathname = useLocation({ select: (l) => l.pathname });
+  return (
+    <div key={pathname} className="page-fade">
+      <Outlet />
+    </div>
   );
 }
