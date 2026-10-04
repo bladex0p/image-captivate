@@ -30,6 +30,7 @@ export type Service = {
   image: AssetKey;
   seo: { title: string; description: string };
   related: string[];
+  faqs: FAQ[];
   detail: ServiceDetail | null; // null = TODO, content to follow
 };
 
@@ -45,6 +46,7 @@ export const services: Service[] = [
       description: "Next-day overnight courier delivery across England with LES Transport. Reliable, secure shipping for businesses and individuals. Get a quote.",
     },
     related: ["express-delivery", "same-day-delivery", "timed-delivery", "parcel-delivery"],
+    faqs: [],
     detail: null,
   },
   {
@@ -58,6 +60,7 @@ export const services: Service[] = [
       description: "Fast express courier delivery across England for urgent shipments. Professional drivers and a 100+ vehicle fleet. Request a quote today.",
     },
     related: ["same-day-delivery", "overnight-delivery", "timed-delivery", "special-delivery"],
+    faqs: [],
     detail: null,
   },
   {
@@ -71,6 +74,7 @@ export const services: Service[] = [
       description: "Efficient pallet delivery for heavier goods and palletised freight across England, with vans up to long wheelbase. Get a pallet delivery quote.",
     },
     related: ["multi-drop-delivery", "same-day-delivery", "overnight-delivery", "special-delivery"],
+    faqs: [],
     detail: null,
   },
   {
@@ -84,6 +88,7 @@ export const services: Service[] = [
       description: "Flexible special delivery courier solutions for unique or time-sensitive transport across England. Speak to LES Transport for a tailored quote.",
     },
     related: ["white-glove-delivery", "high-value-delivery", "timed-delivery", "same-day-delivery"],
+    faqs: [],
     detail: null,
   },
   {
@@ -97,6 +102,7 @@ export const services: Service[] = [
       description: "Urgent same day courier from Luton and Birmingham, delivering across England. Collected and delivered by experienced drivers. Get a same day quote.",
     },
     related: ["express-delivery", "timed-delivery", "high-value-delivery", "pallet-delivery"],
+    faqs: [],
     detail: {
       intro:
         "Our same-day courier service is designed for urgent deliveries that need to reach their destination as quickly as possible. When time matters, LES Transport provides fast and reliable transport across England, ensuring items are collected and delivered efficiently by experienced drivers. This service is ideal for businesses and individuals who need immediate delivery support and cannot wait for standard courier timeframes.",
@@ -133,6 +139,7 @@ export const services: Service[] = [
       description: "Timed courier delivery with precise delivery windows across England. Coordinate shipments with operations, clients or events. Get a quote.",
     },
     related: ["same-day-delivery", "express-delivery", "multi-drop-delivery", "overnight-delivery"],
+    faqs: [],
     detail: null,
   },
   {
@@ -146,6 +153,7 @@ export const services: Service[] = [
       description: "Secure high value delivery across England with careful handling and professional drivers. Trust LES Transport and get a quote today.",
     },
     related: ["white-glove-delivery", "special-delivery", "same-day-delivery", "timed-delivery"],
+    faqs: [],
     detail: {
       intro:
         "Our high-value delivery service is designed for goods that require extra care, attention and security during transport. LES Transport ensures valuable items are handled professionally and transported safely from collection to delivery. With experienced drivers and secure handling procedures, we provide a trusted courier solution for transporting valuable goods.",
@@ -182,6 +190,7 @@ export const services: Service[] = [
       description: "Multi-drop delivery for businesses with multiple stops across a planned route in England. Efficient routing and professional drivers. Get a quote.",
     },
     related: ["parcel-delivery", "pallet-delivery", "timed-delivery", "overnight-delivery"],
+    faqs: [],
     detail: null,
   },
   {
@@ -195,6 +204,7 @@ export const services: Service[] = [
       description: "Fast, reliable parcel delivery across England for businesses and individuals. Same day and scheduled options from LES Transport. Get a quote.",
     },
     related: ["same-day-delivery", "overnight-delivery", "multi-drop-delivery", "express-delivery"],
+    faqs: [],
     detail: null,
   },
   {
@@ -208,8 +218,28 @@ export const services: Service[] = [
       description: "Premium white glove delivery for sensitive, fragile or high-value items across England. Careful handling by professional drivers. Get a quote.",
     },
     related: ["high-value-delivery", "special-delivery", "same-day-delivery", "timed-delivery"],
+    faqs: [],
     detail: null,
   },
 ];
+
+/**
+ * Service FAQs — written only from facts in the brief.
+ * TODO (client): review and confirm all service FAQ wording before launch.
+ */
+function faqsFor(s: Service): FAQ[] {
+  const name = s.title;
+  const lower = name.toLowerCase();
+  return [
+    { q: `What is ${lower}?`, a: `${s.blurb} LES Transport provides ${lower} across England for businesses and individuals.` },
+    { q: `Where does LES Transport offer ${lower}?`, a: `We are headquartered in Bedfordshire with operational coverage in Birmingham, and deliver across England, including London and the Midlands.` },
+    { q: `Who uses your ${lower} service?`, a: `Both businesses and individuals, for one-off shipments as well as regular, scheduled deliveries.` },
+    { q: `Which vehicles do you use for ${lower}?`, a: `We operate a 100+ vehicle fleet, from small vans to long wheelbase vans, and match the right vehicle to the size, weight and type of your goods.` },
+    { q: `Are goods insured during ${lower}?`, a: `Yes. Our vehicles are covered by goods-in-transit insurance of up to £10,000 per vehicle.` },
+    { q: `Who will handle my delivery?`, a: `Experienced, professional drivers, backed by over a decade of industry experience through our sister company, operating since 2013.` },
+    { q: `How do I get a quote for ${lower}?`, a: `Use our online quote form or contact our dispatch team on 01582 858394 with your collection and delivery details, goods description and timing.` },
+  ];
+}
+for (const s of services) s.faqs = faqsFor(s);
 
 export const getService = (slug: string) => services.find((s) => s.slug === slug);

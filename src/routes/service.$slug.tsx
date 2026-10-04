@@ -19,7 +19,7 @@ export const Route = createFileRoute("/service/$slug")({
       title: s.seo.title,
       description: s.seo.description,
       path: `/service/${s.slug}`,
-      faqs: s.detail?.faqs ?? undefined,
+      faqs: s.faqs,
       crumbs: [
         { name: "Services", path: "/services" },
         { name: s.title, path: `/service/${s.slug}` },
@@ -84,16 +84,7 @@ function ServiceDetail() {
         </div>
       </section>
 
-      {d?.faqs ? (
-        <FAQAccordion faqs={d.faqs} />
-      ) : (
-        <section className="section">
-          <div className="container-les">
-            <SectionHeading pill="FAQ" title="Frequently Asked Questions" />
-            <div className="mt-8"><TodoBlock label={`7 FAQs for ${s.title}.`} /></div>
-          </div>
-        </section>
-      )}
+      <FAQAccordion faqs={s.faqs} />
       <CTABand />
     </>
   );
