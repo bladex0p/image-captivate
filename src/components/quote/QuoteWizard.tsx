@@ -215,9 +215,9 @@ export function QuoteWizard({ compact = false }: { compact?: boolean }) {
     <div ref={topRef} className={cn("on-dark card-dark scroll-mt-28", compact ? "p-5 sm:p-6" : "p-6 sm:p-10")}>
       {step <= 7 && (
         <div className="mb-8">
-          <div className="flex items-center justify-between text-xs uppercase tracking-[0.14em] text-on-dark-muted">
-            <span>Step {step} of 7</span>
-            <span>{STEPS[step - 1]}</span>
+          <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 text-xs uppercase tracking-[0.14em] text-on-dark-muted">
+            <span className="min-w-0">Step {step} of 7</span>
+            <span className="max-w-[12rem] truncate text-right">{STEPS[step - 1]}</span>
           </div>
           <div className="mt-3 h-1 overflow-hidden rounded-full bg-brand-white/15" aria-hidden>
             <div

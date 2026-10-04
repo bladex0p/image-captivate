@@ -37,6 +37,7 @@ export function useInViewOnce<T extends Element>(rootMargin = "0px 0px -10% 0px"
  */
 export function MotionRuntime() {
   useEffect(() => {
+    if (!prefersReducedMotion()) document.documentElement.classList.add("motion-ok");
     const sel = ".reveal:not(.is-in), .stagger:not(.is-in), .draw-line:not(.is-in)";
     if (prefersReducedMotion() || typeof IntersectionObserver === "undefined") {
       const all = () => document.querySelectorAll(sel).forEach((el) => el.classList.add("is-in"));
@@ -54,11 +55,20 @@ export function MotionRuntime() {
           }
         }
       },
-      { rootMargin: "0px 0px -8% 0px" },
+      { rootMargin: "0px 0px -2% 0px", threshold: 0.01 },
     );
     const scan = () => document.querySelectorAll(sel).forEach((el) => io.observe(el));
-    scan();
     let t = 0;
+    let t2 = 0;
+    const start = () => {
+      cancelAnimationFrame(t);
+      cancelAnimationFrame(t2);
+      t = requestAnimationFrame(() => {
+        t2 = requestAnimationFrame(scan);
+      });
+    };
+    if (document.readyState === "complete") start();
+    else window.addEventListener("load", start, { once: true });
     const mo = new MutationObserver(() => {
       cancelAnimationFrame(t);
       t = requestAnimationFrame(scan);
@@ -67,6 +77,9 @@ export function MotionRuntime() {
     return () => {
       io.disconnect();
       mo.disconnect();
+      cancelAnimationFrame(t);
+      cancelAnimationFrame(t2);
+      window.removeEventListener("load", start);
     };
   }, []);
   return null;

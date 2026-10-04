@@ -104,12 +104,12 @@ function Home() {
               <Link to="/get-a-quote">Request a Delivery Quote</Link>
             </Button>
           </div>
-          <div className="stagger grid grid-cols-2 gap-4">
-            <div className="on-dark texture-dark card-dark p-8">
+          <div className="stagger grid gap-4 sm:grid-cols-2">
+            <div className="on-dark texture-dark card-dark p-6 sm:p-8">
               <CountUp value={facts.vehicles} className="block font-heading text-5xl font-bold" />
               <div className="mt-1 text-sm uppercase tracking-[0.12em] text-on-dark-muted">Vehicles</div>
             </div>
-            <div className="rounded-md border border-line p-8">
+            <div className="rounded-md border border-line p-6 sm:p-8">
               <CountUp value={facts.goodsInTransit} className="block font-heading text-5xl font-bold" />
               <div className="mt-1 text-sm uppercase tracking-[0.12em] text-fg-muted">Goods-in-transit cover per vehicle</div>
             </div>

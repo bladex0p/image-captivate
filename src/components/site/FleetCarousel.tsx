@@ -41,10 +41,10 @@ export function FleetCarousel({
     <div className={className}>
       <div
         ref={track}
-        className="-mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-2 [scrollbar-width:none] md:mx-0 md:px-0 sm:hidden [&::-webkit-scrollbar]:hidden"
+        className="flex max-w-full snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain pb-2 [scrollbar-width:none] sm:hidden [&::-webkit-scrollbar]:hidden"
       >
         {items.map((v) => (
-          <FleetCard key={v.name} v={v} H={H} className="w-[82%] shrink-0 snap-start" />
+          <FleetCard key={v.name} v={v} H={H} className="w-full min-w-0 shrink-0 snap-start" />
         ))}
       </div>
       <div className="mt-4 flex justify-center gap-2 sm:hidden">

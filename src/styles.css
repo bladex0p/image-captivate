@@ -168,6 +168,7 @@
   }
   html {
     scroll-behavior: smooth;
+    overflow-x: clip;
   }
   body {
     background-color: var(--color-background);
@@ -176,6 +177,18 @@
     font-size: clamp(1rem, 0.95rem + 0.2vw, 1.125rem);
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+  main,
+  section,
+  article,
+  header,
+  footer {
+    min-width: 0;
+  }
+  img,
+  svg {
+    max-width: 100%;
   }
   h1,
   h2,
@@ -240,6 +253,7 @@
   }
   .container-les {
     width: 100%;
+    min-width: 0;
     max-width: 80rem;
     margin-inline: auto;
     padding-inline: 1.25rem;
@@ -325,80 +339,54 @@
 
 /* ---------- Theme toggle (van) ---------- */
 .theme-toggle {
-  --tt-track: oklch(0.9 0.04 230);
-  --tt-ground: oklch(0.8 0.02 230);
+  --tt-track: var(--surface);
   --tt-body: oklch(1 0 0);
   --tt-line: oklch(0.2 0 0);
   --tt-window: oklch(0.3 0 0);
   --tt-light: transparent;
   position: relative;
-  width: 64px;
-  height: 32px;
-  border-radius: 999px;
+  width: 46px;
+  height: 40px;
+  min-width: 46px;
+  padding: 0;
+  border-radius: var(--radius);
   overflow: hidden;
   background: var(--tt-track);
-  border: 1px solid oklch(0 0 0 / 18%);
-  transition: background-color 500ms ease-in-out;
+  border: 1px solid var(--header-border);
+  color: var(--header-fg);
+  transition: background-color 200ms ease, border-color 200ms ease, transform 150ms ease;
   flex-shrink: 0;
 }
+.theme-toggle:hover {
+  background: var(--bg-alt);
+}
+.theme-toggle:active {
+  transform: translateY(1px);
+}
 .dark .theme-toggle {
-  --tt-track: oklch(0.22 0.03 265);
-  --tt-ground: oklch(0.35 0.02 265);
-  --tt-body: oklch(0.28 0 0);
+  --tt-track: var(--surface);
+  --tt-body: var(--brand-black);
   --tt-line: oklch(1 0 0);
-  --tt-window: oklch(0.15 0 0);
-  --tt-light: oklch(0.9 0.15 85);
-  border-color: oklch(1 0 0 / 30%);
-}
-.theme-toggle .tt-ground {
-  position: absolute;
-  inset: auto 6px 6px 6px;
-  height: 1px;
-  background: var(--tt-ground);
-  transition: background-color 500ms ease-in-out;
-}
-.theme-toggle .tt-stars {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  transition: opacity 500ms ease-in-out;
-}
-.dark .theme-toggle .tt-stars {
-  opacity: 1;
+  --tt-window: var(--brand-black);
+  --tt-light: var(--brand-red);
 }
 .theme-toggle .tt-van {
   position: absolute;
-  left: 4px;
-  bottom: 4px;
+  left: 50%;
+  top: 50%;
   width: 30px;
   height: 18px;
-  transform: translateX(0);
-  transition: transform 500ms ease-in-out;
-}
-.dark .theme-toggle .tt-van {
-  transform: translateX(26px);
+  transform: translate(-50%, -50%);
 }
 .theme-toggle .tt-van svg {
-  transform: scaleX(-1);
-}
-.dark .theme-toggle .tt-van svg {
-  transform: none;
-}
-.theme-toggle .tt-wheel {
-  transform-box: fill-box;
-  transform-origin: center;
-}
-.theme-toggle.is-driving .tt-wheel {
-  animation: tt-spin 250ms linear 2;
+  display: block;
+  width: 30px !important;
+  height: 18px !important;
+  max-width: none;
 }
 .theme-toggle .tt-headlight {
   fill: var(--tt-light);
   filter: drop-shadow(0 0 2px var(--tt-light));
-}
-@keyframes tt-spin {
-  to {
-    transform: rotate(360deg);
-  }
 }
 @media (prefers-reduced-motion: reduce) {
   .theme-toggle,
@@ -415,6 +403,22 @@ html body div.pca,
 html body .pca {
   z-index: 10000 !important;
   font-family: var(--font-body) !important;
+  max-width: 100vw !important;
+  overflow-x: clip !important;
+}
+html body .pca .pcacontent,
+html body .pca .pcacentre,
+html body .pca .pcatext {
+  box-sizing: border-box !important;
+  max-width: 100% !important;
+}
+@media (max-width: 639px) {
+  html body .pca .pcacontent,
+  html body .pca .pcacentre,
+  html body .pca .pcatext {
+    width: 100% !important;
+    margin-inline: 0 !important;
+  }
 }
 html body div.pca div.pcaautocomplete,
 html body .pcaautocomplete {
@@ -665,6 +669,15 @@ html body .pcaflaglist {
 }
 .group:hover .num-outline {
   color: var(--brand-red);
+}
+
+@media (hover: none), (pointer: coarse) {
+  .num-outline {
+    color: var(--brand-red);
+  }
+  .group:active {
+    border-color: var(--brand-red);
+  }
 }
 
 /* Primary button sweep + arrow nudge */

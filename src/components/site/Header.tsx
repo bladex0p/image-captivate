@@ -61,9 +61,9 @@ export function Header() {
   }, []);
   return (
     <header className={`site-header on-theme sticky top-0 z-50 transition-all duration-300 ${scrolled ? "is-scrolled" : ""}`}>
-      <div className={`container-les flex items-center justify-between gap-6 transition-all duration-300 ${scrolled ? "h-16" : "h-20 md:h-24"}`}>
-        <Link to="/" aria-label="LES Transport home">
-          <Logo className={`w-auto transition-all duration-300 ${scrolled ? "h-11 md:h-12" : "h-14 md:h-[68px]"}`} />
+      <div className={`container-les grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 transition-all duration-300 sm:flex sm:justify-between sm:gap-6 ${scrolled ? "h-16" : "h-20 md:h-24"}`}>
+        <Link to="/" aria-label="LES Transport home" className="min-w-0">
+          <Logo className={`max-w-full transition-all duration-300 ${scrolled ? "h-11 md:h-12" : "h-14 md:h-[68px]"}`} />
         </Link>
 
         <nav aria-label="Main" className="hidden items-center gap-7 xl:flex">
@@ -97,7 +97,7 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-3">
+        <div className="flex shrink-0 items-center gap-2 sm:gap-3">
           <ThemeToggle />
           <Button asChild className="hidden sm:inline-flex">
             <Link to="/get-a-quote">Get a Quote</Link>

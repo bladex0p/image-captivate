@@ -168,7 +168,7 @@ export function NumberedCards({
               className="card-dark group flex gap-6 bg-brand-black/40 p-6 transition-colors hover:border-brand-red md:p-8"
             >
               <span className="num-outline w-[2.2ch] shrink-0 font-heading text-4xl font-bold leading-none md:text-5xl">{String(i + 1).padStart(2, "0")}</span>
-              <div>
+              <div className="min-w-0">
                 <h3 className="text-2xl">{it.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-on-dark-muted">{it.body}</p>
               </div>
@@ -220,7 +220,7 @@ export function Coverage({
         <Reveal><SectionHeading pill="Coverage" title={title} intro={intro} /></Reveal>
         <Stagger className="mt-12 grid gap-px overflow-hidden rounded-md border border-line bg-line md:grid-cols-3">
           {items.map((b, i) => (
-            <div key={b.title} style={staggerIndex(i)} className="bg-surface p-8 lg:p-10">
+            <div key={b.title} style={staggerIndex(i)} className="min-w-0 bg-surface p-6 sm:p-8 lg:p-10">
               <h3 className="flex items-center gap-3 text-2xl">
                 {/Bedfordshire|Birmingham/.test(b.title) && <span className="pulse-dot shrink-0" aria-hidden />}
                 {b.title}
@@ -244,7 +244,7 @@ export function FAQAccordion({ faqs, title = "Frequently Asked Questions" }: { f
             <AccordionItem
               key={f.q}
               value={`f${i}`}
-              className="border-l-2 border-l-transparent border-b-line px-6 transition-colors last:border-b-0 data-[state=open]:border-l-brand-red data-[state=open]:bg-bg-alt/60"
+              className="min-w-0 border-l-2 border-l-transparent border-b-line px-4 transition-colors last:border-b-0 data-[state=open]:border-l-brand-red data-[state=open]:bg-bg-alt/60 sm:px-6"
             >
               <AccordionTrigger plus className="py-5 text-left text-base font-semibold hover:no-underline">{f.q}</AccordionTrigger>
               <AccordionContent className="pb-5 text-sm leading-relaxed text-fg-muted">{f.a}</AccordionContent>
