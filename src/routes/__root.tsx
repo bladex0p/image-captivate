@@ -18,6 +18,7 @@ import { NotFoundPage } from "@/components/site/pages";
 import { Button } from "@/components/ui/button";
 import { ADDRESSNOW_CSS, ADDRESSNOW_JS } from "@/config/addressnow";
 import { localBusinessJsonLd } from "@/lib/seo";
+import { themeInitScript } from "@/components/site/ThemeToggle";
 
 function ErrorComponent({ error, reset }: ErrorComponentProps) {
   console.error(error);
@@ -51,13 +52,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Manrope:wght@400;500;600;700&display=swap",
       },
       { rel: "stylesheet", href: ADDRESSNOW_CSS },
       { rel: "stylesheet", href: appCss },
       { rel: "icon", type: "image/png", href: "/favicon.png" },
     ],
     scripts: [
+      { children: themeInitScript },
       { src: ADDRESSNOW_JS, async: true },
       { type: "application/ld+json", children: localBusinessJsonLd },
     ],
@@ -70,7 +72,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en-GB">
+    <html lang="en-GB" className="dark" suppressHydrationWarning>
       <head>
         <HeadContent />
       </head>
