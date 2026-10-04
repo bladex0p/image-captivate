@@ -495,3 +495,279 @@ html body .pcacountrylist,
 html body .pcaflaglist {
   display: none !important;
 }
+
+/* =====================================================================
+ * Motion system. Only transform/opacity animate. Hidden start states apply
+ * only under html.motion-ok (set before paint when motion is allowed).
+ * ===================================================================== */
+:root {
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Reveal: fade + 16px rise, once */
+.motion-ok .reveal:not(.is-in) {
+  opacity: 0;
+  transform: translateY(16px);
+}
+.motion-ok .reveal {
+  transition: opacity 700ms var(--ease-out) var(--d, 0ms), transform 700ms var(--ease-out) var(--d, 0ms);
+}
+/* Stagger: direct children rise in sequence */
+.motion-ok .stagger:not(.is-in) > * {
+  opacity: 0;
+  transform: translateY(16px);
+}
+.motion-ok .stagger > * {
+  transition: opacity 650ms var(--ease-out), transform 650ms var(--ease-out), border-color 200ms, background-color 200ms;
+  transition-delay: calc(var(--i, 0) * 80ms);
+}
+.motion-ok .stagger.is-in > * {
+  transition-delay: calc(var(--i, 0) * 80ms), calc(var(--i, 0) * 80ms), 0ms, 0ms;
+}
+
+/* Route-line divider draws left to right */
+.draw-line svg {
+  clip-path: inset(0 0 0 0);
+}
+.motion-ok .draw-line svg {
+  transition: clip-path 1600ms var(--ease-out);
+}
+.motion-ok .draw-line:not(.is-in) svg {
+  clip-path: inset(0 100% 0 0);
+}
+
+/* Page transition */
+@keyframes page-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.motion-ok .page-fade {
+  animation: page-in 200ms ease-out both;
+}
+
+/* Hero */
+@keyframes hero-zoom {
+  from { transform: scale(1); }
+  to { transform: scale(1.06); }
+}
+.motion-ok .hero-zoom {
+  animation: hero-zoom 18s ease-in-out infinite alternate;
+  will-change: transform;
+}
+@keyframes mask-up {
+  from { transform: translateY(105%); }
+  to { transform: none; }
+}
+.hero-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding-bottom: 0.04em;
+}
+.hero-word > span {
+  display: inline-block;
+}
+.motion-ok .hero-word > span {
+  animation: mask-up 750ms var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 45ms + 80ms);
+}
+@keyframes dash-draw {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+.tagline-dash {
+  transform-origin: left center;
+}
+.motion-ok .tagline-dash {
+  animation: dash-draw 700ms var(--ease-out) 200ms both;
+}
+@keyframes tick-pop {
+  0% { transform: scale(0); opacity: 0; }
+  70% { transform: scale(1.18); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.motion-ok .tick-pop {
+  animation: tick-pop 450ms var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 140ms + 650ms);
+}
+@keyframes route-march {
+  to { stroke-dashoffset: -180; }
+}
+.motion-ok .route-march {
+  animation: route-march 6s linear infinite;
+}
+
+/* Scroll progress bar */
+.scroll-progress {
+  transform-origin: left center;
+  transform: scaleX(0);
+}
+
+/* Marquee */
+.marquee {
+  overflow: hidden;
+  padding-block: 1.1rem;
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+}
+.marquee-row {
+  display: flex;
+  flex-shrink: 0;
+  gap: 2rem;
+  padding-right: 2rem;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(1.25rem, 1rem + 1vw, 1.9rem);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+.motion-ok .marquee-track {
+  animation: marquee 38s linear infinite;
+}
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* Pulse dot (bases) */
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(2.8); opacity: 0; }
+}
+.pulse-dot {
+  position: relative;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--brand-red);
+}
+.motion-ok .pulse-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--brand-red);
+  animation: pulse-ring 1.8s ease-out infinite;
+}
+
+/* Outlined numbers that fill red on hover */
+.num-outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--brand-red);
+  transition: color 250ms ease;
+}
+.group:hover .num-outline {
+  color: var(--brand-red);
+}
+
+/* Primary button sweep + arrow nudge */
+.btn-sweep {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.btn-sweep::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(110deg, transparent 30%, oklch(1 0 0 / 28%) 50%, transparent 70%);
+  transform: translateX(-120%);
+}
+.motion-ok .btn-sweep:hover::before {
+  transition: transform 650ms var(--ease-out);
+  transform: translateX(120%);
+}
+.btn-sweep:not(:has(svg))::after {
+  content: "→";
+  display: inline-block;
+  margin-left: -0.1rem;
+  transition: transform 200ms var(--ease-out);
+}
+.btn-sweep > svg:last-child,
+.btn-sweep::after {
+  transition: transform 200ms var(--ease-out);
+}
+.btn-sweep:hover::after,
+.btn-sweep:hover > svg:last-child {
+  transform: translateX(3px);
+}
+
+/* Image skeleton shimmer */
+@keyframes shimmer {
+  to { transform: translateX(100%); }
+}
+.img-skeleton {
+  position: relative;
+}
+.img-skeleton::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, oklch(1 0 0 / 8%), transparent);
+  transform: translateX(-100%);
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+
+/* Fine grid texture on dark sections */
+.section.on-dark,
+.dark .section.on-theme,
+.texture-dark {
+  background-image:
+    linear-gradient(oklch(1 0 0 / 3.5%) 1px, transparent 1px),
+    linear-gradient(90deg, oklch(1 0 0 / 3.5%) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* Quote wizard */
+@keyframes step-fwd {
+  from { opacity: 0; transform: translateX(28px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes step-back {
+  from { opacity: 0; transform: translateX(-28px); }
+  to { opacity: 1; transform: none; }
+}
+.motion-ok .step-fwd { animation: step-fwd 320ms var(--ease-out) both; }
+.motion-ok .step-back { animation: step-back 320ms var(--ease-out) both; }
+@keyframes shake {
+  10%, 90% { transform: translateX(-2px); }
+  20%, 80% { transform: translateX(4px); }
+  30%, 50%, 70% { transform: translateX(-6px); }
+  40%, 60% { transform: translateX(6px); }
+}
+.motion-ok .shake { animation: shake 420ms ease-in-out; }
+@keyframes tick-in {
+  from { transform: scale(0); }
+  to { transform: scale(1); }
+}
+.motion-ok .tick-in { animation: tick-in 260ms var(--ease-out) both; }
+@keyframes draw-stroke {
+  to { stroke-dashoffset: 0; }
+}
+.success-tick circle { stroke-dasharray: 160; stroke-dashoffset: 0; }
+.success-tick path { stroke-dasharray: 40; stroke-dashoffset: 0; }
+.motion-ok .success-tick circle { stroke-dashoffset: 160; animation: draw-stroke 600ms var(--ease-out) forwards; }
+.motion-ok .success-tick path { stroke-dashoffset: 40; animation: draw-stroke 400ms var(--ease-out) 550ms forwards; }
+.motion-ok .fade-late { animation: page-in 500ms ease-out 900ms both; }
+
+/* Drawer links stagger */
+.motion-ok .drawer-link {
+  animation: step-fwd 380ms var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 40ms + 120ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .img-skeleton::before { display: none; }
+}
