@@ -13,7 +13,7 @@ import type { FAQ } from "@/data/faqs";
 import { ImageSlot, SectionHeading } from "./primitives";
 import { cn } from "@/lib/utils";
 
-export function ServiceCard({ service, featured, index = 0, className }: { service: Service; featured?: boolean; index?: number; className?: string }) {
+export function ServiceCard({ service, featured, index = 0, className }: { service: Service; featured?: boolean; index?: number; className?: string | undefined }) {
   const Icon = service.icon;
   return (
     <Link

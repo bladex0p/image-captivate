@@ -80,7 +80,7 @@ export function ImageSlot({
   return <LoadedImage src={assetSrc(asset)} alt={alt} ratio={ratio} className={className} greyscale={greyscale} eager={eager} />;
 }
 
-function LoadedImage({ src, alt, ratio, className, greyscale, eager }: { src: string; alt: string; ratio: string; className?: string; greyscale?: boolean; eager?: boolean }) {
+function LoadedImage({ src, alt, ratio, className, greyscale, eager }: { src: string; alt: string; ratio: string; className?: string | undefined; greyscale?: boolean | undefined; eager?: boolean | undefined }) {
   const ref = useRef<HTMLImageElement>(null);
   const [loaded, setLoaded] = useState(true);
   useEffect(() => {
