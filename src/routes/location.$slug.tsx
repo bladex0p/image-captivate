@@ -51,7 +51,7 @@ function LocationPage() {
               {l.coverage.map((c) => (
                 <div key={c.title} className="card-light p-5">
                   <h3 className="flex items-center gap-2 text-xl"><MapPin className="size-4 text-brand-red" aria-hidden />{c.title}</h3>
-                  <p className="mt-1 text-sm text-grey-500">{c.body}</p>
+                  <p className="mt-1 text-sm text-fg-muted">{c.body}</p>
                 </div>
               ))}
             </div>
@@ -61,7 +61,7 @@ function LocationPage() {
             src={mapEmbed(l.map)}
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
-            className="h-full min-h-[24rem] w-full rounded-md border border-border-light grayscale"
+            className="h-full min-h-[24rem] w-full rounded-md border border-line grayscale"
           />
         </div>
       </section>

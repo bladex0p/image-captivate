@@ -74,7 +74,13 @@ export function AddressLookup({
             { element: id("town"), field: "City", mode: m.POPULATE },
             { element: id("postcode"), field: "PostalCode", mode: m.POPULATE },
           ],
-          { key: ADDRESSNOW_KEY, setCursor: true },
+          {
+            key: ADDRESSNOW_KEY,
+            setCursor: true,
+            // UK only — no country selector
+            countries: { codesList: "GBR", defaultCode: "GBR" },
+            setCountryByIP: false,
+          },
         );
         ctrl.listen("populate", (a) => {
           const opts = { shouldValidate: true, shouldDirty: true };
@@ -166,7 +172,7 @@ export function AddressLookup({
         </div>
       </div>
       {!showFields && err && <p className="text-xs text-brand-red">Please select an address or enter it manually.</p>}
-      {!manual && (
+      {!showFields && (
         <button type="button" onClick={() => setManual(true)} className="justify-self-start text-xs font-semibold uppercase tracking-[0.1em] text-brand-white underline underline-offset-4">
           Enter address manually
         </button>

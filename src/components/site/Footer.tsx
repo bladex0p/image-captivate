@@ -17,7 +17,7 @@ export function Footer() {
     <footer className="on-dark border-t border-border-dark pb-24 md:pb-0">
       <div className="container-les grid gap-12 py-16 md:grid-cols-3">
         <div>
-          <Logo className="h-12" />
+          <Logo className="h-14" />
           <p className="mt-5 max-w-xs text-sm text-on-dark-muted">{site.footerLine}</p>
           <div className="mt-6 flex gap-3">
             <a href={site.social.facebook} target="_blank" rel="noopener noreferrer" aria-label="LES Transport on Facebook" className="card-dark flex size-10 items-center justify-center hover:border-brand-white">

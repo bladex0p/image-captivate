@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { ChevronDown, Menu, Phone } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { ThemeToggle } from "./ThemeToggle";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import {
@@ -28,17 +29,30 @@ const links2 = [
 const navCls =
   "text-[13px] font-semibold uppercase tracking-[0.1em] text-on-dark-muted transition-colors hover:text-brand-white data-[status=active]:text-brand-white";
 
-export function Logo({ className = "h-10" }: { className?: string }) {
-  return <img src={assetSrc("logoWhite")} alt="LES Transport" className={`${className} w-auto`} width={97} height={40} />;
+/** White logo on dark surfaces. On light surfaces (light-theme header/drawer) it sits on a black
+ * plate until logo-black.svg is supplied (see src/data/assets.ts). */
+export function Logo({ className = "h-14" }: { className?: string }) {
+  return (
+    <span className="logo-plate inline-flex items-center transition-all duration-300">
+      <img src={assetSrc("logoWhite")} alt="LES Transport" className={`${className} w-auto`} width={135} height={56} />
+    </span>
+  );
 }
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const on = () => setScrolled(window.scrollY > 24);
+    on();
+    window.addEventListener("scroll", on, { passive: true });
+    return () => window.removeEventListener("scroll", on);
+  }, []);
   return (
-    <header className="on-dark sticky top-0 z-50 border-b border-border-dark">
-      <div className="container-les flex h-20 items-center justify-between gap-6">
+    <header className={`site-header on-theme sticky top-0 z-50 transition-all duration-300 ${scrolled ? "is-scrolled" : ""}`}>
+      <div className={`container-les flex items-center justify-between gap-6 transition-all duration-300 ${scrolled ? "h-16" : "h-20 md:h-24"}`}>
         <Link to="/" aria-label="LES Transport home">
-          <Logo />
+          <Logo className={`w-auto transition-all duration-300 ${scrolled ? "h-11 md:h-12" : "h-14 md:h-[68px]"}`} />
         </Link>
 
         <nav aria-label="Main" className="hidden items-center gap-7 xl:flex">
@@ -51,16 +65,16 @@ export function Header() {
             <DropdownMenuTrigger className={`${navCls} inline-flex items-center gap-1 outline-none`}>
               Services <ChevronDown className="size-3.5" aria-hidden />
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="on-dark w-64 border-border-dark">
+            <DropdownMenuContent className="on-theme w-64 border-border-dark">
               {services.map((s) => (
-                <DropdownMenuItem key={s.slug} asChild className="focus:bg-grey-800 focus:text-brand-white">
+                <DropdownMenuItem key={s.slug} asChild className="focus:bg-brand-red focus:text-on-red">
                   <Link to="/service/$slug" params={{ slug: s.slug }}>
                     {s.title}
                   </Link>
                 </DropdownMenuItem>
               ))}
               <DropdownMenuSeparator className="bg-border-dark" />
-              <DropdownMenuItem asChild className="font-semibold text-brand-red focus:bg-grey-800 focus:text-brand-white">
+              <DropdownMenuItem asChild className="font-semibold text-brand-red focus:bg-brand-red focus:text-on-red">
                 <Link to="/services">View All Services</Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -73,6 +87,7 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-3">
+          <ThemeToggle />
           <Button asChild className="hidden sm:inline-flex">
             <Link to="/get-a-quote">Get a Quote</Link>
           </Button>
@@ -82,10 +97,11 @@ export function Header() {
                 <Menu />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="on-dark w-[85vw] max-w-sm overflow-y-auto border-border-dark p-0">
+            <SheetContent side="right" className="on-theme w-[85vw] max-w-sm overflow-y-auto border-border-dark p-0">
               <SheetTitle className="sr-only">Menu</SheetTitle>
-              <div className="p-6">
-                <Logo className="h-9" />
+              <div className="flex items-center justify-between gap-4 p-6 pr-14">
+                <Logo className="h-12" />
+                <ThemeToggle />
               </div>
               <nav aria-label="Mobile" className="flex flex-col px-6 pb-8" onClick={() => setOpen(false)}>
                 {[...links, ...links2].map((l) => (

@@ -19,7 +19,7 @@ export const Route = createFileRoute("/service/$slug")({
       title: s.seo.title,
       description: s.seo.description,
       path: `/service/${s.slug}`,
-      faqs: s.detail?.faqs ?? undefined,
+      faqs: s.faqs,
       crumbs: [
         { name: "Services", path: "/services" },
         { name: s.title, path: `/service/${s.slug}` },
@@ -46,7 +46,7 @@ function ServiceDetail() {
         <div className="container-les grid items-start gap-12 lg:grid-cols-2">
           <div>
             <SectionHeading pill="Service" title={`What is ${s.title}?`} />
-            <div className="mt-6 leading-relaxed text-grey-500">
+            <div className="mt-6 leading-relaxed text-fg-muted">
               {d ? <p>{d.intro}</p> : <TodoBlock label={`Intro copy for ${s.title}.`} />}
             </div>
           </div>
@@ -54,7 +54,7 @@ function ServiceDetail() {
         </div>
       </section>
 
-      <section className="section bg-grey-100">
+      <section className="section bg-bg-alt">
         <div className="container-les grid gap-6 lg:grid-cols-3">
           {d ? (
             <>
@@ -75,7 +75,7 @@ function ServiceDetail() {
       <Coverage />
       <FleetPreview />
 
-      <section className="section bg-grey-100">
+      <section className="section bg-bg-alt">
         <div className="container-les">
           <SectionHeading pill="Related" title="Related Services" />
           <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -84,16 +84,7 @@ function ServiceDetail() {
         </div>
       </section>
 
-      {d?.faqs ? (
-        <FAQAccordion faqs={d.faqs} />
-      ) : (
-        <section className="section">
-          <div className="container-les">
-            <SectionHeading pill="FAQ" title="Frequently Asked Questions" />
-            <div className="mt-8"><TodoBlock label={`7 FAQs for ${s.title}.`} /></div>
-          </div>
-        </section>
-      )}
+      <FAQAccordion faqs={s.faqs} />
       <CTABand />
     </>
   );

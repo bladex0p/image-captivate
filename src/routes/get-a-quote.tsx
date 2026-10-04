@@ -20,7 +20,7 @@ function Quote() {
   return (
     <>
       <PageHero crumbs={[{ name: "Get a Quote" }]} title="Request a Delivery Quote" />
-      <section className="on-dark pb-24">
+      <section className="on-theme pb-24">
         <div className="container-les grid gap-12 lg:grid-cols-[1fr_2fr]">
           <div>
             <CheckList dark items={["Seven quick steps", "Right vehicle matched to your job", "Goods-in-transit cover up to £10,000"]} />
